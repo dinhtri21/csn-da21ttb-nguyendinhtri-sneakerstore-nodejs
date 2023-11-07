@@ -6,6 +6,7 @@ var logger = require('morgan');
 var session = require('express-session')
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products')
+const cors = require('cors');
 
 var app = express();
 
@@ -18,6 +19,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// Kích hoạt CORS cho tất cả các tài nguyên
+app.use(cors());
+
 app.use(session({
   secret: 'mysecretkey',
   resave: false,
