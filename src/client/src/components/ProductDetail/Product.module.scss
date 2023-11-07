@@ -1,0 +1,124 @@
+.product-detail-row {
+  margin-top: 110px;
+  @media (max-width: 740px) {
+    margin-top: 102px;
+  }
+}
+
+//product-img
+.product-img img {
+  object-fit: cover;
+  width: 100%;
+}
+//product-des
+.product-des {
+  @media (max-width: 740px) {
+    padding: 0;
+    width: 100%;
+  }
+}
+.product-title {
+  font-size: 28px;
+}
+.product-price {
+  font-size: 25px;
+  color: var(--primary-color-1);
+  margin-top: 8px;
+}
+//size
+.product-size {
+  display: inline-flex;
+  margin-top: 14px;
+  align-items: center;
+  // border-top: 1px solid black;
+}
+.size-title {
+  color: var(--gray-color);
+  font-size: 16px;
+}
+.size {
+  text-align: center;
+  border-radius: 4px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  // background-color: #ccc;
+  color: var(--gray-color);
+  border: 1px solid #ccc;
+  cursor: pointer;
+  &:hover {
+    color: var(--black-color);
+    border: 1px solid #636363;
+  }
+}
+.size.selected {
+  border: 1px solid var(--primary-color-1);
+  color: var(--primary-color);
+}
+//quantity
+.product-quantity {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
+}
+.quantity {
+  margin-left: 8px;
+  display: inline-flex;
+  border: 1px solid var(--black-color);
+}
+.quantity-title {
+  font-weight: 700;
+  color: var(--gray-color);
+}
+.quantity-Div {
+  border: none;
+  border-right: 1px solid var(--black-color);
+}
+.quantity-Sum {
+  border: none;
+  border-left: 1px solid var(--black-color);
+}
+.quantity-Div,
+.quantity-Sum {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.quantity-display {
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  color: var(--black-color);
+  font-weight: 400;
+}
+//add-to-cart-btn
+.add-to-cart-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 14px;
+  display: block;
+  width: 50%;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: var(--black-color);
+  color: var(--white-color);
+  font-weight: 700;
+  &:hover {
+    opacity: 0.9;
+  }
+  @media (max-width: 740px) {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+//product-infomation
+.product-infomation {
+  margin-top: 35px;
+  padding-top: 30px;
+  border-top: 1px solid #000;
+  text-align: justify;
+}

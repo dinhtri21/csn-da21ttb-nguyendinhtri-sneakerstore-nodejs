@@ -37,41 +37,46 @@ function Header() {
     console.log(menuOpen);
   };
   return (
-    <div className={cx("wrapper")}>
+    <div className={cx("container","header")}>
       <div
         onClick={handleMenuItem}
         className={cx({ "menu-overlay": menuOpen })}
       ></div>
-      <div className={cx("container")}>
-        <div className={cx("logo")}>
-          <button onClick={handleMenuItem} className={cx("nav-button-mobile")}>
-            <div className={cx("nav-mobile-icon")}>
-              <TbMenu2 />
-            </div>
-          </button>
-          <Link to={"/"} className={cx("logo-item")}>
-            Sneaker Store
-          </Link>
-        </div>
-        <div className={cx("navigations", { "nav-open": menuOpen })}>
-          {navigations.map((nav, index) => {
-            return (
-              <Link
-                onClick={handleMenuItem}
-                className={cx("nav-item")}
-                to={nav.path}
-                key={index}
-              >
-                {nav.name}
-                <div className={cx("nav-item-icon")}>
-                  <MdOutlineKeyboardArrowRight />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-        <div className={cx("cart")}>
-          <PiShoppingCartThin />
+      <div className={cx("grid")}>
+        <div className={cx("row")}>
+          <div className={cx("logo","col-3","col-half")}>
+            <button
+              onClick={handleMenuItem}
+              className={cx("nav-button-mobile")}
+            >
+              <div className={cx("nav-mobile-icon")}>
+                <TbMenu2 />
+              </div>
+            </button>
+            <Link to={"/"} className={cx("logo-item")}>
+              Sneaker Store
+            </Link>
+          </div>
+          <div className={cx("navigations","col-6", { "nav-open": menuOpen })}>
+            {navigations.map((nav, index) => {
+              return (
+                <Link
+                  onClick={handleMenuItem}
+                  className={cx("nav-item")}
+                  to={nav.path}
+                  key={index}
+                >
+                  {nav.name}
+                  <div className={cx("nav-item-icon")}>
+                    <MdOutlineKeyboardArrowRight />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className={cx("cart","col-3","col-half")}>
+            <PiShoppingCartThin  className={cx('cart-icon')}/>
+          </div>
         </div>
       </div>
     </div>
