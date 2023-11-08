@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProductsComponent from "../../components/Products";
 
 function Products() {
-  const [produts, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -15,7 +15,7 @@ function Products() {
     };
     fetchProducts();
   }, []);
-  return <ProductsComponent products={produts} />;
+  return <ProductsComponent products={products} />;
 }
 
 export default Products;
