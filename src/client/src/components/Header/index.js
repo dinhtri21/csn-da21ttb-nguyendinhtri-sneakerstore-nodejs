@@ -37,14 +37,14 @@ function Header() {
     console.log(menuOpen);
   };
   return (
-    <div className={cx("container","header")}>
+    <div className={cx("container", "header")}>
       <div
         onClick={handleMenuItem}
         className={cx({ "menu-overlay": menuOpen })}
       ></div>
       <div className={cx("grid")}>
         <div className={cx("row")}>
-          <div className={cx("logo","col-3","col-half")}>
+          <div className={cx("logo", "col-3", "col-half")}>
             <button
               onClick={handleMenuItem}
               className={cx("nav-button-mobile")}
@@ -57,7 +57,7 @@ function Header() {
               Sneaker Store
             </Link>
           </div>
-          <div className={cx("navigations","col-6", { "nav-open": menuOpen })}>
+          <div className={cx("navigations", "col-6", { "nav-open": menuOpen })}>
             {navigations.map((nav, index) => {
               return (
                 <Link
@@ -74,8 +74,10 @@ function Header() {
               );
             })}
           </div>
-          <div className={cx("cart","col-3","col-half")}>
-            <PiShoppingCartThin  className={cx('cart-icon')}/>
+          <div className={cx("cart", "col-3", "col-half")}>
+            <Link to={'/cart'}>
+              <PiShoppingCartThin className={cx("cart-icon")} />
+            </Link>
           </div>
         </div>
       </div>

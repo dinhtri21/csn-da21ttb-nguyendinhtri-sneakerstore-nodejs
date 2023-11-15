@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import ProductsComponent from "../../components/Products";
+import axios from "axios";
 
 function Products() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    const fetchProducts = async () => {
+    const axiosProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3001/products");
-        const data = await response.json();
-        setProducts(data);
+        const response = await axios.get("http://localhost:3001/products", {
+          withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
+        });
+        
+        setProducts(response.data);
       } catch (err) {
         console.log("Error: " + err);
       }
     };
-    fetchProducts();
+    axiosProducts();
   }, []);
   return <ProductsComponent products={products} />;
 }

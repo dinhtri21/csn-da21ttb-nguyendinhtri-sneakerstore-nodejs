@@ -38,7 +38,7 @@
 }
 .size {
   text-align: center;
-  border-radius: 4px;
+  // border-radius: 4px;
   height: 30px;
   width: 30px;
   line-height: 30px;
@@ -67,7 +67,7 @@
 .quantity {
   margin-left: 8px;
   display: inline-flex;
-  border: 1px solid var(--black-color);
+  border: 1px solid #ccc;
 }
 .quantity-title {
   font-weight: 700;
@@ -75,11 +75,11 @@
 }
 .quantity-Div {
   border: none;
-  border-right: 1px solid var(--black-color);
+  border-right: 1px solid #ccc;
 }
 .quantity-Sum {
   border: none;
-  border-left: 1px solid var(--black-color);
+  border-left: 1px solid #ccc;
 }
 .quantity-Div,
 .quantity-Sum {
@@ -88,12 +88,13 @@
   cursor: pointer;
 }
 .quantity-display {
-  width: 40px;
+  width: 34px;
   height: 30px;
   text-align: center;
   line-height: 30px;
   color: var(--black-color);
   font-weight: 400;
+  font-size: 14px;
 }
 //add-to-cart-btn
 .add-to-cart-btn {

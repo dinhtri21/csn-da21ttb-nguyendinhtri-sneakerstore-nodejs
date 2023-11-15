@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 function Product() {
   const [product, setProduct] = useState({});
   const { id } = useParams();
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {

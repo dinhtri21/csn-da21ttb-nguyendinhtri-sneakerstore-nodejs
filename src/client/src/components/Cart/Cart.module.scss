@@ -1,0 +1,103 @@
+.cart-grid {
+  margin-top: 110px;
+}
+
+//products cart
+.products-cart {
+  //   border: 1px solid var(--black-color);
+}
+.products-cart-title {
+  border-bottom: 1px solid var(--black-color);
+}
+.products {
+  //   border: 1px solid var(--black-color);
+}
+.img-product {
+  padding: 5px;
+}
+.img-product img {
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+}
+.product-title {
+//   display: -webkit-box !important; 
+//   -webkit-box-orient: vertical;
+//   -webkit-line-clamp: 2; /* Số dòng hiển thị trước khi cắt */
+//   overflow: hidden;
+}
+//quantity
+.quantity {
+  display: inline-flex;
+  border: 1px solid #ccc;
+}
+
+.quantity-Div {
+  border: none;
+  border-right: 1px solid #ccc;
+}
+.quantity-Sum {
+  border: none;
+  border-left: 1px solid #ccc;
+}
+.quantity-Div,
+.quantity-Sum {
+  font-weight: 500;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+}
+.quantity-display {
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 30px;
+  color: var(--black-color);
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  line-height: 26px;
+}
+//pay
+.pay {
+  border: 1px solid var(--black-color);
+  max-height: 300px;
+  border-radius: 4px;
+}
+.pay-title {
+  font-size: var(--font-size-title-1);
+}
+.total-amount-title {
+  font-size: var(--font-size-title-2);
+}
+.total-amount {
+  text-align: right;
+  font-size: var(--font-size-title-2);
+  color: var(--primary-color);
+}
+.pay-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: var(--black-color);
+  color: var(--white-color);
+  font-weight: 700;
+  text-align: center;
+  &:hover {
+    opacity: 0.8;
+  }
+  @media (max-width: 740px) {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+//class chung
+.ali-center {
+  display: flex;
+  align-items: center;
+}

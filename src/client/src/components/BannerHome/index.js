@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./BannerHome.module.scss";
 import images from "../../assets/images";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -14,7 +14,16 @@ const img = [images.bannerSale5, images.nikeBanner1, images.nikeBanner3];
 
 function BannerHome() {
   const [currentImage, setCurrentImage] = useState(0);
-  console.log(currentImage);
+
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+      nextImage();
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, [currentImage]);
+
   const prevImage = () => {
     currentImage == 0
       ? setCurrentImage(img.length - 1)
