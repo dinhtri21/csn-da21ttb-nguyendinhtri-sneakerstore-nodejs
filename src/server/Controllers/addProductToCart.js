@@ -3,14 +3,27 @@
 const addProductToCart = (req, res) => {
   const { productId, quantity, size } = req.body;
   if (!req.session.cart) {
-    //   console.log(req.session);
     req.session.cart = [];
   }
-  //   console.log(req.session);
-  req.session.cart.push({ productId, quantity, size });
-  res.json({ message: "Thêm vào giỏ hàng thành công !" }); //trả về client thêm sản phẩm thành công
+
+  const existingProduct = req.session.cart.find(
+    (item) => item.productId === productId && item.size === size
+  );
+
+  if (existingProduct) {
+    // Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng
+    existingProduct.quantity += quantity;
+    res.json({ message: "Cập nhật giỏ hàng thành công!" });
+  } else {
+    // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+    req.session.cart.push({ productId, quantity, size });
+    res.json({ message: "Thêm vào giỏ hàng thành công!" });
+  }
+
+  console.log(req.session);
 };
 
 module.exports = {
   addProductToCart,
 };
+
