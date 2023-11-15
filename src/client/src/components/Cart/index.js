@@ -1,20 +1,47 @@
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import axios from "axios";
+
 const cx = classNames.bind(styles);
 
 function Cart({ products }) {
-  console.log(products);
-  const [quantity, setQuantity] = useState(1);
+  // console.log(products);
+
+  // console.log(quantity_oder);
+  // console.log(quantity_oderRef)
   //handle
-  const handleDecreaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-  const handleIncreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+  const handleDecreaseQuantity = async (e) => {
+    const size =
+      e.target.parentElement.parentElement.parentElement.children[3].innerText;
+    const id = Number(
+      e.target.parentElement.parentElement.parentElement.getAttribute(
+        "product_id"
+      )
+    );
+    var quantity = Number(e.target.parentElement.children[1].innerText);
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/cart/addtocart",
+        {
+          productId: id,
+          quantity: quantity,
+          size: size,
+        },
+        {
+          withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
+        }
+      );
+      console.log(response.data.message);
+      quantity++;
+      e.target.parentElement.children[1].innerText = quantity;
+      // Xử lý thông báo hoặc chuyển hướng tùy thuộc vào response từ server
+    } catch (error) {
+      console.error("Error adding to cart:", error);
     }
   };
+  const handleIncreaseQuantity = () => {};
+
   return (
     <div className={cx("container")}>
       <div className={cx("grid", "cart-grid")}>
@@ -27,9 +54,10 @@ function Cart({ products }) {
           {/* cart */}
           <div className={cx("col-9", "products-cart")}>
             <div className={cx("row", "products-cart-title")}>
-              <div className={cx("col-2")}>Ảnh</div>
+              <div className={cx("col-1")}>Ảnh</div>
               <div className={cx("col-4")}>Tên sản phẩm</div>
               <div className={cx("col-2")}>Giá</div>
+              <div className={cx("col-1")}>Size</div>
               <div className={cx("col-2")}>Số lượng</div>
               <div className={cx("col-2")}>Thành Tiền</div>
             </div>
@@ -37,15 +65,22 @@ function Cart({ products }) {
 
             {products.map((product, index) => {
               return (
-                <div className={cx("row", "products")} key={index}>
+                <div
+                  product_id={product.product_id}
+                  className={cx("row", "products")}
+                  key={index}
+                >
                   <div className={cx("col-1", "ali-center", "img-product")}>
                     <img src={product.image1}></img>
                   </div>
-                  <div className={cx("col-5", "product-title", "ali-center")}>
+                  <div className={cx("col-4", "product-title", "ali-center")}>
                     {product.name}
                   </div>
                   <div className={cx("col-2", "ali-center")}>
                     {product.price}
+                  </div>
+                  <div className={cx("col-1", "ali-center")}>
+                    {product.size}
                   </div>
                   <div className={cx("col-2", "ali-center")}>
                     <div className={cx("quantity")}>
@@ -56,7 +91,7 @@ function Cart({ products }) {
                         -
                       </button>
                       <div className={cx("quantity-display")}>
-                        {product.variance.quantity}
+                        {product.quantity_oder}
                       </div>
                       <button
                         onClick={handleDecreaseQuantity}
