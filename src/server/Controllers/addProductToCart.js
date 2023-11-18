@@ -7,7 +7,7 @@ const addProductToCart = (req, res) => {
   }
 
   const existingProduct = req.session.cart.find(
-    (item) => item.productId === productId && item.size === size
+    (item) => item.productId == productId && item.size == size
   );
 
   if (existingProduct) {
