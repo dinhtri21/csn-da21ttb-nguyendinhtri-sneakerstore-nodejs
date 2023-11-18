@@ -24,7 +24,12 @@ function BodyHome({ products }) {
                 <div className={cx("product-item-inner")}>
                   <img className={cx("product-img")} src={product.image1} />
                   <h4 className={cx("product-title")}>{product.name}</h4>
-                  <h5 className={cx("product-price")}>{product.price}</h5>
+                  <h5 className={cx("product-price")}>
+                    {Math.round(product.price)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    ₫
+                  </h5>
                 </div>
               </Link>
             );
@@ -47,7 +52,12 @@ function BodyHome({ products }) {
                 <div className={cx("product-item-inner")}>
                   <img className={cx("product-img")} src={product.image1} />
                   <h4 className={cx("product-title")}>{product.name}</h4>
-                  <h5 className={cx("product-price")}>{product.price}</h5>
+                  <h5 className={cx("product-price")}>
+                    {Math.round(product.price)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    ₫
+                  </h5>
                 </div>
               </Link>
             );

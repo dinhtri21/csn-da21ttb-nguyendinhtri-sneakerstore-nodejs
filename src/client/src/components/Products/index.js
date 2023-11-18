@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 
 function Products({ products }) {
+  console.log(products);
   const [sortBy, setSortBy] = useState("default");
   const [filterSize, setFilterSize] = useState("default");
 
@@ -36,10 +37,12 @@ function Products({ products }) {
   });
 
   return (
-    <div className={cx("container")}>
+    <div className={cx("container",'container-products')}>
       <div className={cx("grid")}>
         <div className={cx("products-title", "row")}>
-          <h2 className={cx("products-title-text","col-full-width")}>Tất cả sản phẩm</h2>
+          <h2 className={cx("products-title-text", "col-full-width")}>
+            Tất cả sản phẩm
+          </h2>
         </div>
         <div className={cx("filter", "row")}>
           <h4 className={cx("filter-title", "col-1")}>BỘ LỌC</h4>
@@ -80,13 +83,17 @@ function Products({ products }) {
             return (
               <Link
                 to={`/products/${product.product_id}`}
-                className={cx("product-item", "col-3","col-half")}
+                className={cx("product-item", "col-3", "col-half")}
                 key={index}
               >
                 <div className={cx("product-item-inner")}>
                   <img className={cx("product-img")} src={product.image1} />
+                  {/* <img className={cx("product-img")} src="https://saigonsneaker.com/wp-content/uploads/2021/07/vans-style-36-Marshmallow-Dress-Blue-3-430x430.jpg.webp" /> */}
                   <h4 className={cx("product-title")}>{product.name}</h4>
-                  <h5 className={cx("product-price")}>{product.price}</h5>
+                  <h6 className={cx("product-brand")}>{product.brand}</h6>
+                  <h5 className={cx("product-price")}>
+                    {Math.round(product.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}₫
+                  </h5>
                 </div>
               </Link>
             );

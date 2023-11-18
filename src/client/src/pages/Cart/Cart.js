@@ -3,6 +3,7 @@ import CartComponent from "../../components/Cart";
 
 import axios from "axios";
 function Cart() {
+  console.log("render")
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const axiosProductsCart = async () => {
@@ -14,12 +15,27 @@ function Cart() {
       } catch (err) {
         console.log(err);
       }
+      // window.location.reload()
     };
     axiosProductsCart();
   }, []);
+
+  const updateCartData = async () => {
+    // Implement logic to update cart data
+    console.log("updateCartData")
+    try {
+      const response = await axios.get("http://localhost:3001/cart", {
+        withCredentials: true,
+      });
+      setProducts(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
-      <CartComponent products={products} />
+      <CartComponent products={products}  updateCart={updateCartData} />
     </div>
   );
 }

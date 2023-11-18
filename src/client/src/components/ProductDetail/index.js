@@ -1,12 +1,27 @@
 import classNames from "classnames/bind";
 import styles from "./Product.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
 function ProductDetail({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("39");
+
+  const notify = (mess) =>
+    toast.success(`${mess}`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   //handle
   const handleDecreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -35,15 +50,30 @@ function ProductDetail({ product }) {
           withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
         }
       );
-
       console.log(response.data.message);
-      // Xử lý thông báo hoặc chuyển hướng tùy thuộc vào response từ server
+      const mess = response.data.message;
+      notify(mess);
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
   };
+
   return (
-    <div className={cx("container")}>
+    <div className={cx("container", "container-ProductDetail")}>
+      {/* Render the list of toasts */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
       <div className={cx("grid", "product-detail-row")}>
         <div className={cx("row")}>
           <div className={cx("col-6", "product-img")}>
@@ -51,7 +81,12 @@ function ProductDetail({ product }) {
           </div>
           <div className={cx("col-6", "product-des")}>
             <h1 className={cx("product-title")}>{product.name}</h1>
-            <h2 className={cx("product-price")}>{product.price}đ</h2>
+            <h2 className={cx("product-price")}>
+              {Math.round(product.price)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+              ₫
+            </h2>
             <div className={cx("product-size")}>
               {/* Thêm kiểm tra để đảm bảo product và product.variants tồn tại trước khi map */}
               {product && product.variants && (
@@ -90,7 +125,12 @@ function ProductDetail({ product }) {
                 </button>
               </div>
             </div>
-            <button onClick={handleAddToCart} className={cx("add-to-cart-btn")}>
+            <button
+              onClick={() => {
+                handleAddToCart();
+              }}
+              className={cx("add-to-cart-btn")}
+            >
               THÊM VÀO GIỎ
             </button>
             <p className={cx("product-infomation")}>{product.description}</p>

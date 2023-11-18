@@ -1,7 +1,6 @@
 .footer-container {
-  border-top: 1px solid var(--black-color);
+  border-top: 1px solid #ccc;
   margin-top: 30px;
-  // margin-bottom: 30px;
 }
 .footer-grid {
 
@@ -9,7 +8,7 @@
 .footer-row {
   padding-top: 26px;
   padding-bottom: 26px;
-  border-bottom: 1px solid var(--black-color);
+  border-bottom: 1px solid #ccc;
 }
 //
 .footer-item {
@@ -17,7 +16,7 @@
 }
 .title {
   margin: 4px 0;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--black-color);
 }
@@ -36,8 +35,10 @@
 
 //css link chung
 .footer-link {
+  font-size: 16px;
   text-decoration: none;
   color: var(--black-color);
+  
   &:hover {
     color: var(--primary-color);
   }
