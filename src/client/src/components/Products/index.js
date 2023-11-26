@@ -1,57 +1,87 @@
 import classNames from "classnames/bind";
 import styles from "./Products.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { IoMdArrowDropright } from "react-icons/io";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function Products({ products }) {
   console.log(products);
-  const [sortBy, setSortBy] = useState("default");
+  const [sortByPrice, setSortByPrice] = useState("default");
   const [filterSize, setFilterSize] = useState("default");
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  //
 
-  const handleSortChange = (valueSort) => {
-    setSortBy(valueSort);
+  const [newProducts, setNewProducts] = useState([]);
+  //
+  //tạo param url
+  const apiFilter = "http://localhost:3001/products/filter";
+  const apiFilterParams = {
+    sortprice: sortByPrice,
+    filterSize: filterSize,
+    brands: selectedBrands.join(","),
   };
+  const queryString = new URLSearchParams(apiFilterParams).toString();
+  const requestUrl = `${apiFilter}?${queryString}`;
+  console.log(requestUrl);
+  //ket qua => http://localhost:3001/products/filter?sortBy=increase&filterSize=default&brands=Adidas
+  //sắp xếp theo giá
+  const handleSortPriceChange = (valueSort) => {
+    setSortByPrice(valueSort);
+  };
+  //sắp xếp theo size
   const handleFilterSizeChange = (value) => {
     setFilterSize(value);
   };
+  //sắp xếp theo brand
+  const handleBrandFilterChange = (brand) => {
+    const updatedBrands = [...selectedBrands];
 
-  //sắp xếp biến sortedProducts để in ra
-  const sortedProducts = [...products].sort((a, b) => {
-    if (sortBy === "default") {
-      return 0; // Giữ nguyên thứ tự mặc định
-    } else if (sortBy === "increase") {
-      return a.price - b.price; // Sắp xếp giá tăng dần
-    } else if (sortBy === "reduce") {
-      return b.price - a.price; // Sắp xếp giá giảm dần
-    }
-  });
-
-  const filterSizeProduct = [...sortedProducts].filter((product) => {
-    if (filterSize === "default") {
-      return true;
+    // Nếu thương hiệu đã được chọn, hủy chọn. Ngược lại, thêm vào danh sách.
+    if (updatedBrands.includes(brand)) {
+      const index = updatedBrands.indexOf(brand);
+      updatedBrands.splice(index, 1);
     } else {
-      return product.size === filterSize;
+      updatedBrands.push(brand);
     }
-  });
+
+    setSelectedBrands(updatedBrands);
+  };
+ 
+  //call api sau khi filter
+  useEffect(() => {
+    fetchData(requestUrl);
+  }, [sortByPrice, filterSize, selectedBrands]);
+
+  //call api
+  const fetchData = async (requestUrl) => {
+    try {
+      const response = await axios.get(requestUrl);
+      const data = response.data;
+      console.log(data);
+      setNewProducts(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   return (
-    <div className={cx("container",'container-products')}>
+    <div className={cx("container", "container-products")}>
       <div className={cx("grid")}>
         <div className={cx("products-title", "row")}>
           <h2 className={cx("products-title-text", "col-full-width")}>
-            Tất cả sản phẩm
+            TẤT CẢ SẢN PHẨM
           </h2>
         </div>
-        <div className={cx("filter", "row")}>
-          <h4 className={cx("filter-title", "col-1")}>BỘ LỌC</h4>
-          <div className={cx("sort-price", "col-2", "col-half")}>
-            <h4>Sắp xếp:</h4>
+        <div className={cx("filter-price", "row")}>
+          <div className={cx("col-9", "col-half")}></div>
+          <div className={cx("sort-price", "col-3", "col-half")}>
             <select
               className={cx("sort-price-select")}
-              value={sortBy}
-              onChange={(e) => handleSortChange(e.target.value)}
+              value={sortByPrice}
+              onChange={(e) => handleSortPriceChange(e.target.value)}
             >
               <option value="default" className={cx("sort-item")}>
                 Mặc định
@@ -59,45 +89,63 @@ function Products({ products }) {
               <option value="increase" className={cx("sort-item")}>
                 Giá tăng dần
               </option>
-              <option value="reduce" className={cx("sort-item")}>
+              <option value="decrease" className={cx("sort-item")}>
                 Giá giảm dần
               </option>
             </select>
           </div>
-          <div className={cx("sort-size", "col-2", "col-half")}>
-            <h4>Kích thước:</h4>
-            <select
-              value={filterSize}
-              className={cx("sort-size-select")}
-              onChange={(e) => handleFilterSizeChange(e.target.value)}
-            >
-              <option value="default">Mặc định</option>
-              <option value="L">L</option>
-              <option value="M">M</option>
-              <option value="S">S</option>
-            </select>
-          </div>
         </div>
-        <div className={cx("product-container", "row")}>
-          {filterSizeProduct.map((product, index) => {
-            return (
-              <Link
-                to={`/products/${product.product_id}`}
-                className={cx("product-item", "col-3", "col-half")}
-                key={index}
-              >
-                <div className={cx("product-item-inner")}>
-                  <img className={cx("product-img")} src={product.image1} />
-                  {/* <img className={cx("product-img")} src="https://saigonsneaker.com/wp-content/uploads/2021/07/vans-style-36-Marshmallow-Dress-Blue-3-430x430.jpg.webp" /> */}
-                  <h4 className={cx("product-title")}>{product.name}</h4>
-                  <h6 className={cx("product-brand")}>{product.brand}</h6>
-                  <h5 className={cx("product-price")}>
-                    {Math.round(product.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}₫
-                  </h5>
-                </div>
-              </Link>
-            );
-          })}
+        <div className={cx("body-products", "row")}>
+          <div className={cx("col-3")}>
+            <div className={cx("filter-brand", "row")}>
+              <h4 className={cx("col-12", "filter-brand-title")}>
+                Thương hiệu
+              </h4>
+              <ul>
+                {["Adidas", "Nike", "Dior", "Balenciaga"].map((brand) => (
+                  <li
+                    key={brand}
+                    className={cx("col-12", "brand-item", {
+                      selected: selectedBrands.includes(brand),
+                    })}
+                    onClick={() => handleBrandFilterChange(brand)}
+                  >
+                    <IoMdArrowDropright className={cx("brand-item-icon")} />{" "}
+                    {brand}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/*  */}
+          </div>
+
+          <div className={cx("col-9")}>
+            {" "}
+            <div className={cx("product-container", "row")}>
+              {newProducts.map((product, index) => {
+                return (
+                  <Link
+                    to={`/products/${product.product_id}`}
+                    className={cx("product-item", "col-4", "col-half")}
+                    key={index}
+                  >
+                    <div className={cx("product-item-inner")}>
+                      <img className={cx("product-img")} src={product.image1} />
+                      <h4 className={cx("product-title")}>{product.name}</h4>
+                      <h6 className={cx("product-brand")}>{product.brand}</h6>
+                      <h5 className={cx("product-price")}>
+                        {Math.round(product.price)
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                        ₫
+                      </h5>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

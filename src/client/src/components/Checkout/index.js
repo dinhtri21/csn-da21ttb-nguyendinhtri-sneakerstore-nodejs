@@ -1,0 +1,365 @@
+import classNames from "classnames/bind";
+import styles from "./Checkout.module.scss";
+import { Link } from "react-router-dom";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { IoIosArrowBack } from "react-icons/io";
+
+import { useEffect, useState } from "react";
+const cx = classNames.bind(styles);
+
+function Checkout({ products }) {
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  //BEGIN:  XU LI CHON DIA CHI //
+  useEffect(() => {
+    // Fetch data from the provided API
+    fetch(
+      "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setProvinces(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  useEffect(() => {
+    // Cập nhật districts khi selectedProvince thay đổi
+    const selectedProvinceData = provinces.find(
+      (province) => province.Id === selectedProvince
+    );
+    setDistricts(selectedProvinceData ? selectedProvinceData.Districts : []);
+
+    // Đặt lại district và ward
+    setSelectedDistrict("");
+    setSelectedWard("");
+  }, [selectedProvince, provinces]);
+
+  useEffect(() => {
+    // Cập nhật wards khi selectedDistrict thay đổi
+    const selectedDistrictData =
+      districts.find((district) => district.Id === selectedDistrict) || {};
+    setWards(selectedDistrictData.Wards || []);
+    // Đặt lại ward
+    setSelectedWard("");
+  }, [selectedDistrict, districts]);
+
+  const handleProvinceChange = (e) => {
+    const provinceId = e.target.value;
+    setSelectedProvince(provinceId);
+  };
+  const handleDistrictChange = (e) => {
+    const districtId = e.target.value;
+    setSelectedDistrict(districtId);
+  };
+  const handleWardChange = (e) => {
+    setSelectedWard(e.target.value);
+  };
+  //END:  XU LI CHON DIA CHI //
+
+  //Pay Method//
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
+  };
+  //END: pay method//
+
+  //BEGIN: Tạo đối tượng đại diện cho đơn hàng //
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Tạo đối tượng đại diện cho đơn hàng
+    const orderData = {
+      customerInfo: {
+        fullName: event.target.fullName.value,
+        email: event.target.email.value,
+        phone: event.target.phone.value,
+        province: selectedProvince,
+        district: selectedDistrict,
+        ward: selectedWard,
+      },
+      products: products.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity_oder,
+        size: product.size,
+      })),
+      note: event.target.notecart.value,
+      paymentMethod: paymentMethod,
+    };
+
+    console.log(orderData);
+  };
+  //END Tạo đối tượng đại diện cho đơn hàng //
+
+  return (
+    <div className={cx("container", "container-checkout")}>
+      <div className={cx("grid", "grid-checkout")}>
+        <div className={cx("row", "router-page-container")}>
+          <Link className={cx("router-page", "active")} to={"/cart"}>
+            Giỏ hàng
+          </Link>
+          <MdKeyboardArrowRight fill="#999999" />
+          <Link className={cx("router-page", "active")} to={"/checkout"}>
+            Thanh toán
+          </Link>
+        </div>
+        <form action="/submit" method="post" onSubmit={handleSubmit}>
+          <div className={cx("row")}>
+            <div className={cx("col-7")}>
+              <div className={cx("col-12", "form-title")}>
+                THÔNG TIN GIAO HÀNG
+              </div>
+              <div>
+                {/* form */}
+                <div className={cx("row", "form-info")}>
+                  <div className={cx("col-12", "form-input-div")}>
+                    <input
+                      className={cx("form-input")}
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Họ và Tên"
+                      required
+                    />
+                  </div>
+                  <div className={cx("col-8", "form-input-div")}>
+                    <input
+                      className={cx("form-input")}
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      required
+                    />
+                  </div>
+                  <div className={cx("col-4", "form-input-div")}>
+                    <input
+                      className={cx("form-input")}
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      placeholder="Số điện thoại"
+                      required
+                    />
+                  </div>
+                  {/* <div className={cx("col-12", "form-input-div")}>
+                    <input
+                      className={cx("form-input")}
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Địa chỉ"
+                      required
+                    />
+                  </div> */}
+                  <div className={cx("col-4", "form-input-div")}>
+                    <select
+                      id="province"
+                      name="province"
+                      value={selectedProvince}
+                      onChange={handleProvinceChange}
+                      className={cx("form-input")}
+                      required
+                    >
+                      <option value="">Chọn tỉnh/thành phố</option>
+                      {provinces.map((province) => {
+                        return (
+                          <option key={province.Id} value={province.Id}>
+                            {province.Name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className={cx("col-4", "form-input-div")}>
+                    <select
+                      id="district"
+                      name="district"
+                      value={selectedDistrict}
+                      onChange={handleDistrictChange}
+                      className={cx("form-input")}
+                      required
+                    >
+                      <option value="">Chọn quận/huyện</option>
+                      {districts.map((district) => (
+                        <option key={district.Id} value={district.Id}>
+                          {district.Name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className={cx("col-4", "form-input-div")}>
+                    <select
+                      id="ward"
+                      name="ward"
+                      value={selectedWard}
+                      onChange={handleWardChange}
+                      className={cx("form-input")}
+                      required
+                    >
+                      <option value="">Chọn xã/phường</option>
+                      {wards.map((ward) => (
+                        <option key={ward.Id} value={ward.Id}>
+                          {ward.Name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className={cx("col-12", "form-title")}>
+                    THÔNG TIN BỔ SUNG (TUỲ CHỌN)
+                  </div>
+                  <div className={cx("col-12", "form-input-div")}>
+                    <textarea
+                      className={cx("form-input", "note-cart")}
+                      id="notecart"
+                      name="notecart"
+                      placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."
+                    />
+                  </div>
+                  <div
+                    className={cx("col-12", "payment-methods-btn-container")}
+                  >
+                    <Link to={"/cart"} className={cx("back-cart")}>
+                      <IoIosArrowBack />
+                      Quay lại giỏ hàng
+                    </Link>
+                  </div>
+                </div>
+                {/* end form */}
+              </div>
+            </div>
+            <div className={cx("col-5", "products-cart-container")}>
+              <div className={cx("col-12", "form-title-products")}>
+                ĐƠN HÀNG CỦA BẠN
+              </div>
+
+              {/* product */}
+              {products.length == 0 ? (
+                <h3 className={cx("col-12", "no-product-cart")}>
+                  Chưa có sản phẩm nào trong giỏ hàng.
+                </h3>
+              ) : (
+                <>
+                  {products.map((product, index) => {
+                    return (
+                      <div key={index} className={cx("row", "products-item")}>
+                        <div className={cx("col-2", "img-product")}>
+                          <img src={product.image1}></img>
+                          <div className={cx("quantity_oder")}>
+                            {product.quantity_oder}
+                          </div>
+                        </div>
+                        <div className={cx("col-7")}>
+                          <div className={cx("row", "product-title")}>
+                            {product.name}
+                          </div>
+                          <div className={cx("row", "product-title")}>
+                            Size: {product.size}
+                          </div>
+                        </div>
+                        <div className={cx("col-3", "total_amount_product")}>
+                          {product.total_amount_product
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                          ₫
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div className={cx("row", "temp-total-amount-title")}>
+                    <div className={cx("col-6", "product-title-small")}>
+                      Tạm tính
+                    </div>
+                    <div className={cx("col-6", "temp-total-amount-cart")}>
+                      {" "}
+                      {products[0]
+                        ? products[0].total_amount_cart
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                        : 0}
+                      ₫
+                    </div>
+                  </div>
+                  <div className={cx("row")}>
+                    <div className={cx("col-6", "product-title-small")}>
+                      Phí vận chuyển
+                    </div>
+                    <div className={cx("col-6", "total_amount_cart")}>---</div>
+                  </div>
+
+                  <div className={cx("row", "total_amount_cart-div")}>
+                    <div className={cx("col-6", "total_amount_cart-title")}>
+                      Tổng cộng
+                    </div>
+                    <div className={cx("col-6", "total_amount_cart")}>
+                      {" "}
+                      {products[0]
+                        ? products[0].total_amount_cart
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                        : 0}
+                      ₫
+                    </div>
+                  </div>
+
+                  <div className={cx("row")}>
+                    <div className={cx("col-12", "payment-method")}>
+                      <input
+                        id="payment_method_cod"
+                        name="payment_method"
+                        type="radio"
+                        className={cx("input-radio")}
+                        value="cod"
+                        onChange={handlePaymentMethodChange}
+                      ></input>
+                      <label
+                        htmlFor="payment_method_cod"
+                        className={cx("label-input-radio")}
+                      >
+                        Thanh toán khi nhận hàng (COD)
+                      </label>
+                    </div>
+                  </div>
+                  <div className={cx("row")}>
+                    <div className={cx("col-12", "payment-method")}>
+                      <input
+                        id="payment_method_bacs"
+                        name="payment_method"
+                        type="radio"
+                        className={cx("input-radio")}
+                        onChange={handlePaymentMethodChange}
+                        value="bacs"
+                        required
+                      ></input>
+                      <label
+                        htmlFor="payment_method_bacs"
+                        className={cx("label-input-radio")}
+                      >
+                        Chuyển khoản ngân hàng (chưa hỗ trợ)
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className={cx("row")}>
+                    <button type="submit" className={cx("", "oder-btn")}>
+                      ĐẶT HÀNG
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Checkout;

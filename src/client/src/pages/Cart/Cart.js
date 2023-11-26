@@ -3,7 +3,6 @@ import CartComponent from "../../components/Cart";
 
 import axios from "axios";
 function Cart() {
-  console.log("render")
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const axiosProductsCart = async () => {

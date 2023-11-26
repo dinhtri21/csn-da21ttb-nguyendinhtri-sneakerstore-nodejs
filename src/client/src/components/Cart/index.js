@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const cx = classNames.bind(styles);
 
@@ -39,7 +40,7 @@ function Cart({ products, updateCart }) {
         }
       );
       console.log(response.data.message);
-      notify(response.data.message)
+      notify(response.data.message);
       if (updateCart) {
         updateCart();
       }
@@ -98,6 +99,15 @@ function Cart({ products, updateCart }) {
       />
       {/* Same as */}
       <div className={cx("grid", "cart-grid")}>
+        <div className={cx("row", "router-page-container")}>
+          <Link className={cx("router-page", "active")} to={"/cart"}>
+            Giỏ hàng
+          </Link>
+          <MdKeyboardArrowRight fill="#999999" />
+          <Link className={cx("router-page")} to={"/checkout"}>
+            Thanh toán
+          </Link>
+        </div>
         <div className={cx("row")}>
           <div className={cx("col-12")}>
             <h3>Giỏ hàng của bạn</h3>
@@ -235,7 +245,9 @@ function Cart({ products, updateCart }) {
 
             <div className={cx("row")}>
               <div className={cx("col-12")}>
-                <button className={cx("col-12", "pay-btn")}>Thanh toán</button>
+                <Link to={"/checkout"} className={cx("col-12", "checkout-btn")}>
+                  Thanh toán
+                </Link>
               </div>
             </div>
           </div>

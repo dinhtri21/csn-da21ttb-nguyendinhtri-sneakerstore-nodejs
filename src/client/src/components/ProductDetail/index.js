@@ -6,7 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
+
 function ProductDetail({ product }) {
+  console.log(product)
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("39");
 
