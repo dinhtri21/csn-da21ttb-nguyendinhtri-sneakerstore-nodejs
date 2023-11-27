@@ -12,6 +12,7 @@ const getListProducts = (req, res) => {
       res.json(listProducts);
     }
   });
+  
 };
 module.exports = {
   getListProducts,

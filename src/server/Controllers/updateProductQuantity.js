@@ -15,9 +15,10 @@ const updateProductQuantity = (req, res) => {
 
   existingProduct.quantity = quantity;
   console.log(req.session);
-  res.json({ message: "Update quantity success!" });
+  res.json({ message: "Cập nhật giỏ hàng thành công!" });
 };
 
 module.exports = {
   updateProductQuantity,
 };
+

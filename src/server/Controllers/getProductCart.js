@@ -12,7 +12,7 @@ function getProductCart(req, res) {
     res.json([]);
   } else {
     db.query(
-      `SELECT p.*, v.size, v.color, v.quantity
+      `SELECT p.*, v.size, v.color, v.quantity, v.variance_id
       FROM products p
       JOIN variance v ON p.product_id = v.product_id
       WHERE ${whereClause}`,
@@ -21,12 +21,13 @@ function getProductCart(req, res) {
           console.log("Lỗi truy vấn hoặc mảng session cart đã rỗng" + err);
           res.json([]);
         } else {
+          // Tính tổng tiền cả giỏ hàng
           var total_amount_cart = 0;
           results.forEach(function (result, index) {
             total_amount_cart +=
               parseInt(cart[index].quantity) * parseInt(result.price);
           });
-
+          //Số lượng
           const newResults = results.map((result) => {
             const existingProduct = req.session.cart.find((item) => {
               return (
