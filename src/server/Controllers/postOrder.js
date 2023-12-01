@@ -1,7 +1,12 @@
+const { sendEmail } = require("../email/emailService");
 const db = require("../db/db");
+const fs = require("fs");
+const handlebars = require("handlebars");
+const path = require("path");
 
 const postOrder = (req, res) => {
   const orderData = req.body;
+
   console.log(orderData);
   //   customer
   // Thực hiện truy vấn để thêm đơn hàng vào cơ sở dữ liệu
@@ -13,13 +18,14 @@ const postOrder = (req, res) => {
       return;
     }
 
+    const Address = `${orderData.customerInfo.ward}, ${orderData.customerInfo.district}, ${orderData.customerInfo.province}`
     db.query(
       "INSERT INTO customer (fullname, email, phone_number, address) VALUES (?, ?, ?, ?)",
       [
         orderData.customerInfo.fullName,
         orderData.customerInfo.email,
         orderData.customerInfo.phone,
-        orderData.customerInfo.province,
+        Address,
       ],
       (err, results) => {
         if (err) {
@@ -42,7 +48,7 @@ const postOrder = (req, res) => {
             customerId,
             currentDate,
             "Đang xử lý",
-            orderData.total_product_cost,
+            orderData.total_product_cart,
             orderData.note,
             paymentId,
           ],
@@ -60,7 +66,7 @@ const postOrder = (req, res) => {
               orderId,
               product.productId,
               product.quantity,
-              orderData.total_product_cost,
+              orderData.total_product_cart,
               product.variance_id,
             ]);
 
@@ -85,6 +91,53 @@ const postOrder = (req, res) => {
                     return;
                   }
 
+                  //câu hinh đường dẫn
+                  const templatePath = path.join("views", "email-template.hbs");
+                  const templateSource = fs.readFileSync(templatePath, "utf-8");
+                  const template = handlebars.compile(templateSource);
+
+                  //Data truyền vào email
+                  const productTemplate = products.map((product) => {
+                    return {
+                      productName: product.productName,
+                      productImage: product.productImage,
+                      quantity: product.quantity,
+                      size: product.size,
+                      price: Math.round(product.price)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+                      variance_id: product.variance_id,
+                      total_amount_product:Math.round(product.total_amount_product)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+                    };
+                  });
+
+                  const templateData = {
+                    orderId: orderId,
+                    date: currentDate,
+                    customter: orderData.customerInfo,
+                    products: productTemplate,
+                    total_product_cart: Math.round(orderData.total_product_cart)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+                    note: orderData.note,
+                  };
+                  
+                  console.log(templateData);
+                  // console.log(templateData);
+                  // Thay thế dữ liệu vào template
+                  const htmlContent = template(templateData);
+
+                  const mailOptions = {
+                    from: "dinhtri.21092003@gmail.com",
+                    to: orderData.customerInfo.email,
+                    subject: "Xác nhận đơn hàng",
+                    html: htmlContent,
+                  };
+
+                  // Gửi email sử dụng module emailService
+                  sendEmail(mailOptions);
                   // Gửi thông báo thành công về cho client
                   res
                     .status(200)
