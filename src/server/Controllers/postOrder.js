@@ -7,7 +7,6 @@ const path = require("path");
 const postOrder = (req, res) => {
   const orderData = req.body;
 
-  console.log(orderData);
   //   customer
   // Thực hiện truy vấn để thêm đơn hàng vào cơ sở dữ liệu
 
@@ -113,9 +112,11 @@ const postOrder = (req, res) => {
                     };
                   });
 
+                  // const date =`${currentDate}`;
+
                   const templateData = {
+                    date:currentDate,
                     orderId: orderId,
-                    date: currentDate,
                     customter: orderData.customerInfo,
                     products: productTemplate,
                     total_product_cart: Math.round(orderData.total_product_cart)
@@ -124,7 +125,7 @@ const postOrder = (req, res) => {
                     note: orderData.note,
                   };
                   
-                  console.log(templateData);
+             
                   // console.log(templateData);
                   // Thay thế dữ liệu vào template
                   const htmlContent = template(templateData);
@@ -141,7 +142,7 @@ const postOrder = (req, res) => {
                   // Gửi thông báo thành công về cho client
                   res
                     .status(200)
-                    .json({ success: true, message: "Đặt hàng thành công!" });
+                    .json({ success: true, message: "Đơn hàng của bạn đã được đặt thành công! Vui lòng kiểm tra email của bạn để nhận thông tin chi tiết về đơn hàng." });
                 });
               }
             );

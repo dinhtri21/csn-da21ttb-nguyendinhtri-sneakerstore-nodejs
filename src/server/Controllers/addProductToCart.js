@@ -16,10 +16,10 @@ const addProductToCart = (req, res) => {
     res.json({ message: "Cập nhật giỏ hàng thành công!" });
   } else {
     // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+
     req.session.cart.push({ productId, quantity, size, varianceId});
     res.json({ message: "Thêm vào giỏ hàng thành công!" });
   }
-
   console.log(req.session);
 };
 
