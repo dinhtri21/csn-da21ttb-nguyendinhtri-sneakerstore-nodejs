@@ -7,7 +7,8 @@
   color: #0d131c;
 }
 body {
-  background-color: #f6f7f7;
+  // background-color: #f6f7f7;
+  background-color: #fff;
   // background-color: #edeef0;
 }
 :root {
@@ -17,6 +18,7 @@ body {
   --primary-color: #e4c597;
   --primary-color-1: #e7be88;
   --black-color: #1e1e1e;
+  --black-color-1: #333333;
   --header-max-width: 1440px;
   --white-color: #fff;
   --blue-color: #606e8a;
@@ -26,6 +28,7 @@ body {
   --font-size-title-3: 16px;
   --font-size-text: 16px;
   //font-weight: 500;
+  --text-color-gray: #717171;
 }
 :global {
   .container {

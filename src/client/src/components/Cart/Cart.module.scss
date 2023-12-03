@@ -1,5 +1,6 @@
 .cart-grid {
   margin-top: 110px;
+  margin-bottom: 60px;
 }
 //router
 .router-page-container {
@@ -16,6 +17,14 @@
   color: var(--black-color);
 }
 //products cart
+.title-my-cart {
+  padding: 12px 6px !important;
+}
+.title-my-cart h3 {
+  color: var(--black-color-1);
+  font-weight: 500;
+  font-size: 18px;
+}
 .products-cart {
   //   border: 1px solid var(--black-color);
   border-top-left-radius: 4px;
@@ -24,29 +33,34 @@
   background-color: #fff;
 }
 .products-cart-title {
-  border-bottom: 1px solid var(--black-color);
+  border-bottom: 1px solid #ccc;
 }
 .products {
+  margin-top: 4px;
   position: relative;
+  border-bottom: 1px solid #e6e6e6;
 
   //   border: 1px solid var(--black-color);
 }
 
 //remove-product-btn
 .remove-product-btn {
-  background-color: #8f9bb3;
-  color: var(--white-color);
+  // background-color: #8f9bb3;
+  // border-radius: 50%;
+  color: var(--black-color);
+  background-color: #fff;
   border: none;
-  font-size: 7px;
+  font-size: 20px;
   font-weight: 500;
   width: 17px;
   height: 17px;
-  top: 8px;
-  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
   position: absolute;
-  border-radius: 50%;
   cursor: pointer;
 }
+//product
 .no-product-cart {
   font-weight: 400;
   font-size: 16px;
@@ -58,7 +72,7 @@
   padding: 5px;
 }
 .img-product img {
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -68,7 +82,10 @@
 .product-title {
   // padding: 0 !important;
   // margin: 12px;
-  max-height: 61px;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 400;
+  max-height: 56px;
   text-decoration: none;
   display: -webkit-box !important;
   -webkit-line-clamp: 2;
@@ -113,7 +130,7 @@
 //pay
 .pay {
   background-color: #fff;
-  border: 1px solid var(--black-color);
+  // border: 1px solid var(--black-color);
   min-height: 300px;
   border-radius: 4px;
 }
@@ -121,9 +138,11 @@
 .pay-title-h1 {
   font-weight: 500;
   font-size: var(--font-size-title-1);
+  font-size: 18px;
 }
 .pay-title {
 }
+
 .total-amount-title {
   font-size: var(--font-size-title-2);
   font-weight: 500;
@@ -138,7 +157,7 @@
   cursor: pointer;
   border-radius: 4px;
   display: block;
-  padding: 10px 20px;
+  padding: 9px 20px !important;
   border: 1px solid #ccc;
   background-color: var(--black-color);
   color: var(--white-color);

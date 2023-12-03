@@ -3,11 +3,14 @@ import styles from "./Checkout.module.scss";
 import { Link } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
-
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import store, { updateCartItems } from "../../store";
 const cx = classNames.bind(styles);
 
-function Checkout({ products }) {
+function Checkout({ products, handleGetProductsCart }) {
+  console.log(products);
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -17,6 +20,25 @@ function Checkout({ products }) {
   const [selectedWard, setSelectedWard] = useState("");
 
   const [paymentMethod, setPaymentMethod] = useState("");
+
+  // BEGIN: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
+  const handleCountProductsCart = async () => {
+    try {
+      // Gửi yêu cầu GET đến API để lấy số lượng sản phẩm trong giỏ hàng
+      const response = await axios.get(
+        "http://localhost:3001/cart/getcartcount",
+        {
+          withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
+        }
+      );
+      // Sau khi lấy số lượng từ server, gửi action để cập nhật số lượng trong Redux store
+      const cartCount = response.data.cartCount;
+      store.dispatch(updateCartItems(cartCount));
+    } catch (error) {
+      console.error("Error getting cart count:", error);
+    }
+  };
+  // END: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
 
   //BEGIN:  XU LI CHON DIA CHI //
   useEffect(() => {
@@ -34,7 +56,7 @@ function Checkout({ products }) {
   useEffect(() => {
     // Cập nhật districts khi selectedProvince thay đổi
     const selectedProvinceData = provinces.find(
-      (province) => province.Id === selectedProvince
+      (province) => province.Name === selectedProvince
     );
     setDistricts(selectedProvinceData ? selectedProvinceData.Districts : []);
 
@@ -46,26 +68,26 @@ function Checkout({ products }) {
   useEffect(() => {
     // Cập nhật wards khi selectedDistrict thay đổi
     const selectedDistrictData =
-      districts.find((district) => district.Id === selectedDistrict) || {};
+      districts.find((district) => district.Name === selectedDistrict) || {};
     setWards(selectedDistrictData.Wards || []);
     // Đặt lại ward
     setSelectedWard("");
   }, [selectedDistrict, districts]);
 
   const handleProvinceChange = (e) => {
-    const provinceId = e.target.value;
-    setSelectedProvince(provinceId);
+    const provinceName = e.target.value;
+    setSelectedProvince(provinceName);
   };
   const handleDistrictChange = (e) => {
-    const districtId = e.target.value;
-    setSelectedDistrict(districtId);
+    const districtName = e.target.value;
+    setSelectedDistrict(districtName);
   };
   const handleWardChange = (e) => {
     setSelectedWard(e.target.value);
   };
   //END:  XU LI CHON DIA CHI //
 
-  //Pay Method//
+  //START: Pay Method//
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
   };
@@ -86,20 +108,75 @@ function Checkout({ products }) {
         ward: selectedWard,
       },
       products: products.map((product) => ({
-        productId: product.id,
+        productId: product.product_id,
+        productName: product.name,
+        productImage: product.image1,
         quantity: product.quantity_oder,
         size: product.size,
+        price: product.price,
+        variance_id: product.variance_id,
+        total_amount_product: product.total_amount_product,
       })),
+      total_product_cart: products[0].total_amount_cart,
       note: event.target.notecart.value,
       paymentMethod: paymentMethod,
     };
+    const toastId1 = toast.loading("Vui lòng chờ...");
 
-    console.log(orderData);
+    const axiosCheckOut = async () => {
+      axios
+        .post("http://localhost:3001/order", orderData)
+        .then((response) => {
+          console.log(response.data.message);
+          toast.update(toastId1, {
+            render: response.data.message,
+            type: "success",
+            autoClose: 100000,
+            isLoading: false,
+          });
+          ClearCart();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    setTimeout(() => {
+      axiosCheckOut();
+    }, 3000);
   };
   //END Tạo đối tượng đại diện cho đơn hàng //
-
+  //BEGIN: CLEAR GIỎ HÀNG //
+  const ClearCart = async () => {
+    axios
+      .post("http://localhost:3001/cart/clearProductCart", [], {
+        withCredentials: true,
+      })
+      .then((res) => {
+        handleCountProductsCart();
+        handleGetProductsCart();
+        console.log(res.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  //END: CLEAR GIỎ HÀNG//
   return (
     <div className={cx("container", "container-checkout")}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ width: "400px" }} 
+      />
       <div className={cx("grid", "grid-checkout")}>
         <div className={cx("row", "router-page-container")}>
           <Link className={cx("router-page", "active")} to={"/cart"}>
@@ -171,7 +248,7 @@ function Checkout({ products }) {
                       <option value="">Chọn tỉnh/thành phố</option>
                       {provinces.map((province) => {
                         return (
-                          <option key={province.Id} value={province.Id}>
+                          <option key={province.Id} value={province.Name}>
                             {province.Name}
                           </option>
                         );
@@ -189,7 +266,7 @@ function Checkout({ products }) {
                     >
                       <option value="">Chọn quận/huyện</option>
                       {districts.map((district) => (
-                        <option key={district.Id} value={district.Id}>
+                        <option key={district.Id} value={district.Name}>
                           {district.Name}
                         </option>
                       ))}
@@ -206,7 +283,7 @@ function Checkout({ products }) {
                     >
                       <option value="">Chọn xã/phường</option>
                       {wards.map((ward) => (
-                        <option key={ward.Id} value={ward.Id}>
+                        <option key={ward.Id} value={ward.Name}>
                           {ward.Name}
                         </option>
                       ))}
@@ -318,6 +395,7 @@ function Checkout({ products }) {
                         className={cx("input-radio")}
                         value="cod"
                         onChange={handlePaymentMethodChange}
+                        required
                       ></input>
                       <label
                         htmlFor="payment_method_cod"

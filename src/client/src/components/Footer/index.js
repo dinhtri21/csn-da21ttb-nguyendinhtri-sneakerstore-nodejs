@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { PiFacebookLogoLight } from "react-icons/pi";
 import { PiInstagramLogoLight } from "react-icons/pi";
 import { PiYoutubeLogoLight } from "react-icons/pi";
+import { RiPinterestLine } from "react-icons/ri";
 
 const cx = classNames.bind(styles);
 
@@ -82,6 +83,12 @@ function Footer() {
                 <Link to={"/"} className={cx("social-link")}>
                   <PiYoutubeLogoLight className={cx("social-icon")} />
                   <span className={cx("footer-link")}>Youtube</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={"/"} className={cx("social-link")}>
+                  <RiPinterestLine  className={cx("social-icon")} />
+                  <span className={cx("footer-link")}>Pinterest</span>
                 </Link>
               </li>
             </ul>

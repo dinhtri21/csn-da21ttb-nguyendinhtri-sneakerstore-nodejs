@@ -6,16 +6,19 @@ import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
 import GlobalStyles from "./components/GlobalStyles";
-
+import { Provider } from "react-redux";
+import store from "./store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyles>
+  <BrowserRouter>
+    <GlobalStyles>
+      <Provider store={store}>
         <App />
-      </GlobalStyles>
-    </BrowserRouter>
+      </Provider>
+    </GlobalStyles>
+  </BrowserRouter>
   // </React.StrictMode>
 );
 

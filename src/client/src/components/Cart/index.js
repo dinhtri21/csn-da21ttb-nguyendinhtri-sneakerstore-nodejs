@@ -1,30 +1,38 @@
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { CiSquareRemove } from "react-icons/ci";
+import store, { updateCartItems } from "../../store";
 
 const cx = classNames.bind(styles);
 
 function Cart({ products, updateCart }) {
   console.log(products);
-  console.log("render-com");
 
-  const notify = (mess) =>
-    toast.success(`${mess}`, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
+  // START: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
+  const handleCountProductsCart = async () => {
+    try {
+      // Gửi yêu cầu GET đến API để lấy số lượng sản phẩm trong giỏ hàng
+      const response = await axios.get(
+        "http://localhost:3001/cart/getcartcount",
+        {
+          withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
+        }
+      );
+      // Sau khi lấy số lượng từ server, gửi action để cập nhật số lượng trong Redux store
+      const cartCount = response.data.cartCount;
+      store.dispatch(updateCartItems(cartCount));
+    } catch (error) {
+      console.error("Error getting cart count:", error);
+    }
+  };
+  // END: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
   const handleQuantityChange = async (productId, size, quantity) => {
     console.log(productId, size, quantity);
     try {
@@ -40,7 +48,8 @@ function Cart({ products, updateCart }) {
         }
       );
       console.log(response.data.message);
-      notify(response.data.message);
+      toast.success(response.data.message);
+      handleCountProductsCart();
       if (updateCart) {
         updateCart();
       }
@@ -62,7 +71,8 @@ function Cart({ products, updateCart }) {
       );
       console.log(response.data.message);
       const mess = response.data.message;
-      notify(mess);
+      handleCountProductsCart();
+      toast.success(mess);
       if (updateCart) {
         updateCart();
       }
@@ -86,7 +96,7 @@ function Cart({ products, updateCart }) {
     <div className={cx("container")}>
       {/* Render the list of toasts */}
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar
         newestOnTop={false}
@@ -109,11 +119,6 @@ function Cart({ products, updateCart }) {
           </Link>
         </div>
         <div className={cx("row")}>
-          <div className={cx("col-12")}>
-            <h3>Giỏ hàng của bạn</h3>
-          </div>
-        </div>
-        <div className={cx("row")}>
           {/* cart */}
           <div className={cx("col-9", "products-cart")}>
             {/* product */}
@@ -125,6 +130,11 @@ function Cart({ products, updateCart }) {
             ) : (
               <>
                 <div className={cx("row", "products-cart-title")}>
+                  {/* <div className={cx("row")}> */}
+                  <div className={cx("col-12", "title-my-cart")}>
+                    <h3>GIỎ HÀNG CỦA BẠN</h3>
+                  </div>
+                  {/* </div> */}
                   <div className={cx("col-1")}>Ảnh</div>
                   <div className={cx("col-4")}>Tên sản phẩm</div>
                   <div className={cx("col-1")}>Size</div>
@@ -200,7 +210,7 @@ function Cart({ products, updateCart }) {
                         }
                         className={cx("remove-product-btn")}
                       >
-                        Xoá
+                        <CiSquareRemove />
                       </button>
                     </div>
                   );
@@ -228,7 +238,7 @@ function Cart({ products, updateCart }) {
               </div>
             </div>
             <div className={cx("row")}>
-              <div className={cx("col-6")}>
+              <div className={cx("col-6", "total-amount-title-container")}>
                 <h2 className={cx("total-amount-title")}>Tổng tiền</h2>
               </div>
               <div className={cx("col-6")}>

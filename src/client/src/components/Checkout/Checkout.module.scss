@@ -33,6 +33,12 @@
     outline: 1px solid var(--primary-color);
   }
 }
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px white inset;
+}
+
 textarea {
   resize: none;
   min-height: 150px

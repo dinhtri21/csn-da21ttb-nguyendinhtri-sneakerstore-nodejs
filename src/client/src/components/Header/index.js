@@ -4,8 +4,11 @@ import styles from "./Header.module.scss";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { TbMenu2 } from "react-icons/tb";
-
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
 const cx = classNames.bind(styles);
 
 const navigations = [
@@ -28,6 +31,36 @@ const navigations = [
 ];
 
 function Header() {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cartItems);
+  useEffect(() => {
+    const handleUpNumberProduct = async () => {
+      try {
+        // Gửi yêu cầu GET đến API để lấy số lượng sản phẩm trong giỏ hàng
+        const response = await axios.get(
+          "http://localhost:3001/cart/getcartcount",
+          {
+            withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
+          }
+        );
+        // Sau khi lấy số lượng từ server, gửi action để cập nhật số lượng trong Redux store
+        dispatch({
+          type: "UPDATE_CART_ITEMS",
+          payload: response.data.cartCount,
+        });
+      } catch (error) {
+        console.error("Error getting cart count:", error);
+      }
+    };
+    handleUpNumberProduct();
+  }
+  , []);
+
+  const location = useLocation();
+  const currentRoute = location.pathname;
+
+  console.log(currentRoute);
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuItem = () => {
@@ -62,7 +95,9 @@ function Header() {
               return (
                 <Link
                   onClick={handleMenuItem}
-                  className={cx("nav-item")}
+                  className={cx("nav-item", {
+                    "active-nav": currentRoute == nav.path,
+                  })}
                   to={nav.path}
                   key={index}
                 >
@@ -75,8 +110,9 @@ function Header() {
             })}
           </div>
           <div className={cx("cart", "col-3", "col-half")}>
-            <Link to={'/cart'}>
+            <Link to={"/cart"}>
               <PiShoppingCartThin className={cx("cart-icon")} />
+              <div className={cx("count-product-cart")}>{cartItems}</div>
             </Link>
           </div>
         </div>

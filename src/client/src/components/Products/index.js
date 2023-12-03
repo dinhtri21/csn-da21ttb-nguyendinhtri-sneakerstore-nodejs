@@ -71,11 +71,10 @@ function Products({ products }) {
     <div className={cx("container", "container-products")}>
       <div className={cx("grid")}>
         <div className={cx("products-title", "row")}>
-          <h2 className={cx("products-title-text", "col-full-width")}>
+          <h2 className={cx("products-title-text", "col-full-width","col-6")}>
             TẤT CẢ SẢN PHẨM
           </h2>
-        </div>
-        <div className={cx("filter-price", "row")}>
+          <div className={cx("filter-price", "col-6")}>
           <div className={cx("col-9", "col-half")}></div>
           <div className={cx("sort-price", "col-3", "col-half")}>
             <select
@@ -84,7 +83,7 @@ function Products({ products }) {
               onChange={(e) => handleSortPriceChange(e.target.value)}
             >
               <option value="default" className={cx("sort-item")}>
-                Mặc định
+                Sắp xếp theo:
               </option>
               <option value="increase" className={cx("sort-item")}>
                 Giá tăng dần
@@ -94,6 +93,7 @@ function Products({ products }) {
               </option>
             </select>
           </div>
+        </div>
         </div>
         <div className={cx("body-products", "row")}>
           <div className={cx("col-3")}>
