@@ -1,8 +1,9 @@
 import classNames from "classnames/bind";
 import styles from "./AdminLogin.module.scss";
-import images from "../../assets/images";
+import images from "../../../assets/images";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -10,7 +11,7 @@ function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log(email + password);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -41,6 +42,9 @@ function AdminLogin() {
           clearToken();
           console.log(response.data);
           saveToken(response.data.token);
+          alert("Đăng nhập thành công!");
+          window.location.href = "/admin/dashboard";
+          // navigate("/admin/dashboard");
         })
         .catch((error) => {
           console.log(error.response.data.message);

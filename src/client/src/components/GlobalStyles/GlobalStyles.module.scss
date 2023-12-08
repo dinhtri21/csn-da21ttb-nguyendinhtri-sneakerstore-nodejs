@@ -115,4 +115,19 @@ body {
       width: 100%;
     }
   }
+
+  //admin page
+  .container.container-admin {
+    display: inline-flex;
+    justify-content: start;
+    width: calc(100% - 220px);
+    margin-left: 220px;
+  }
+
+  .grid.grid-admin {
+    width: 100%;
+    max-width: 100%;
+  }
+  .row.row-admin {
+  }
 }

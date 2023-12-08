@@ -1,4 +1,4 @@
-import AdminLogin from "../../components/AdminLogin";
+import AdminLogin from "../../../components/Admin/AdminLogin";
 function Admin() {
     return <AdminLogin />;
 }

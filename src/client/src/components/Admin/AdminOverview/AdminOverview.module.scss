@@ -1,0 +1,28 @@
+.title-page {
+  font-size: 20px;
+  color: var(--black-color);
+  font-weight: 500;
+}
+.overview-container {
+  display: flex;
+  background-color: #e6eeed;
+  padding: 16px;
+  border-radius: 8px;
+//   border: 1px solid #ccc;
+}
+.overview-inner {
+  margin-left: 16px;
+}
+.overview-inner-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color-gray);
+}
+.overview-inner-number {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--blue-color);
+}
+.overview-icon {
+  font-size: 50px;
+}
