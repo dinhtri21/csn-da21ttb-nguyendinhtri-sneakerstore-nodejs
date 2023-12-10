@@ -118,13 +118,18 @@ body {
 
   //admin page
   .container.container-admin {
+    // background-image: linear-gradient(to right, #dfe9f3 0%, #eff4fe 100%);
     display: inline-flex;
     justify-content: start;
-    width: calc(100% - 220px);
-    margin-left: 220px;
+    width: calc(100% - 200px);
+    margin-left: 200px;
+    height: 100%;
+    min-height: 100vh;
+
   }
 
   .grid.grid-admin {
+    padding: 30px 40px 0 40px;
     width: 100%;
     max-width: 100%;
   }

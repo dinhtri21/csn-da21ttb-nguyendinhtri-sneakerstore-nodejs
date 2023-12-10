@@ -4,11 +4,12 @@ const cx = classNames.bind(styles);
 
 function AdminProducts() {
   return (
-    <div className={cx("container","container-page-admin")}>
-        <h1>Sản phẩm</h1>
+    <div className={cx("container", "container-admin")}>
+      <div className={cx("grid")}>
+       
+      </div>
     </div>
   );
 }
 
 export default AdminProducts;
-

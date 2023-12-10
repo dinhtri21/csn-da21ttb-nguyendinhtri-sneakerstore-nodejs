@@ -30,13 +30,13 @@ function App() {
 
   const isAdminRoute = currentPath.startsWith("/admin");
   const isAdminDashboardRoute = currentPath.startsWith("/admin/dashboard");
-  console.log(currentPath);
+
 
   return (
     <div className="App">
       {isAdminRoute ? null : <Header />}
       {isAdminDashboardRoute ? <AdminNavigation /> : null}
-      {isAdminDashboardRoute ? <AdminHeader /> : null}
+      {/* {isAdminDashboardRoute ? <AdminHeader /> : null} */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
@@ -65,8 +65,8 @@ function App() {
             )
           }
         />
-        <Route
-          path="/admin/dashboard/order"
+        {/* <Route
+          path="/admin/dashboard/order/:page"
           element={
             isAuthenticated ? (
               <AdminOrder />
@@ -74,7 +74,8 @@ function App() {
               <Navigate to="/admin" replace={true} />
             )
           }
-        />
+        /> */}
+        <Route path="/admin/dashboard/order/:page" element={<AdminOrder />} />
         <Route
           path="/admin/dashboard/products"
           element={
@@ -85,9 +86,6 @@ function App() {
             )
           }
         />
-
-       
-        
       </Routes>
       {isAdminRoute ? null : <Footer />}
     </div>

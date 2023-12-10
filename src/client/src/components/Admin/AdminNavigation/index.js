@@ -15,7 +15,6 @@ function AdminDashboard() {
   const currentPath = location.pathname;
 
   console.log(currentPath);
-
   function handleLogout() {
     // Xóa token khỏi localStorage
 
@@ -28,68 +27,65 @@ function AdminDashboard() {
     <div className={cx("container-dashboard")}>
       <div className={cx("grid-dashboard")}>
         <div className={cx("row")}>
-          <div className={cx("col-12", "dashboard")}>
-            <div className={cx("col-12", "brand-title")}>
-              <Link className={cx("brand-title-link")}>SNEAKER STORE</Link>
-            </div>
-            <div className={cx("col-12")}>
-              <Link
-                to="/admin/dashboard"
-                className={cx(
-                  "nav-item",
-                  currentPath == "/admin/dashboard" ? "nav-active" : null
-                )}
-              >
-                <CiIndent className={cx("nav-item-icon")} />
-                <h2 className={cx("nav-item-title")}>Tổng quan</h2>
-              </Link>
-            </div>
-            <div className={cx("col-12")}>
-              <Link
-                to="/admin/dashboard/products"
-                className={cx(
-                  "nav-item",
-                  currentPath == "/admin/dashboard/products"
-                    ? "nav-active"
-                    : null
-                )}
-              >
-                <CiSquareMore className={cx("nav-item-icon")} />
-                <h2 className={cx("nav-item-title")}>Sản Phẩm</h2>
-              </Link>
-            </div>
-            <div className={cx("col-12")}>
-              <Link
-                to="/admin/dashboard/customer"
-                className={cx(
-                  "nav-item",
-                  currentPath == "/admin/dashboard/customer"
-                    ? "nav-active"
-                    : null
-                )}
-              >
-                <CiUser className={cx("nav-item-icon")} />
-                <h2 className={cx("nav-item-title")}>Khách Hàng</h2>
-              </Link>
-            </div>
-            <div className={cx("col-12")}>
-              <Link
-                to="/admin/dashboard/order"
-                className={cx(
-                  "nav-item",
-                  currentPath == "/admin/dashboard/order" ? "nav-active" : null
-                )}
-              >
-                <CiShoppingCart className={cx("nav-item-icon")} />
-                <h2 className={cx("nav-item-title")}>Đơn Hàng</h2>
-              </Link>
-            </div>
-            <div className={cx("col-12")}>
-              <button onClick={handleLogout} className={cx("logout-btn")}>
-                <CiLogout className={cx("nav-item-icon")} />
-                <h2 className={cx("nav-item-title")}>Đăng Xuất</h2>
-              </button>
-            </div>
+          <div className={cx("col-12", "brand-title")}>
+            <Link className={cx("brand-title-link")}>SNEAKER STORE</Link>
+          </div>
+          <div className={cx("col-12")}>
+            <Link
+              to="/admin/dashboard"
+              className={cx(
+                "nav-item",
+                currentPath == "/admin/dashboard" ? "nav-active" : null
+              )}
+            >
+              <CiIndent className={cx("nav-item-icon")} />
+              <h2 className={cx("nav-item-title")}>Tổng Quan</h2>
+            </Link>
+          </div>
+          <div className={cx("col-12")}>
+            <Link
+              to="/admin/dashboard/products"
+              className={cx(
+                "nav-item",
+                currentPath == "/admin/dashboard/products" ? "nav-active" : null
+              )}
+            >
+              <CiSquareMore className={cx("nav-item-icon")} />
+              <h2 className={cx("nav-item-title")}>Sản Phẩm</h2>
+            </Link>
+          </div>
+          <div className={cx("col-12")}>
+            <Link
+              to="/admin/dashboard/customer"
+              className={cx(
+                "nav-item",
+                currentPath == "/admin/dashboard/customer" ? "nav-active" : null
+              )}
+            >
+              <CiUser className={cx("nav-item-icon")} />
+              <h2 className={cx("nav-item-title")}>Khách Hàng</h2>
+            </Link>
+          </div>
+          <div className={cx("col-12")}>
+            <Link
+              to="/admin/dashboard/order/1"
+              className={cx(
+                "nav-item",
+                currentPath.indexOf("/admin/dashboard/order/") !== -1
+                  ? "nav-active"
+                  : null
+              )}
+            >
+              <CiShoppingCart className={cx("nav-item-icon")} />
+              <h2 className={cx("nav-item-title")}>Đơn Hàng</h2>
+            </Link>
+          </div>
+
+          <div className={cx("col-12", "logout-btn-div")}>
+            <button onClick={handleLogout} className={cx("logout-btn")}>
+              <CiLogout className={cx("nav-item-icon")} />
+              <h2 className={cx("nav-item-title")}>Đăng Xuất</h2>
+            </button>
           </div>
         </div>
       </div>
