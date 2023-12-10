@@ -10,6 +10,7 @@ var productsRouter = require("./routes/products");
 var featuredRouter = require("./routes/featuredProducts");
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
+var admin = require("./routes/admin")
 
 const cors = require("cors");
 
@@ -46,6 +47,7 @@ app.use("/cart", cartRouter);
 app.use("/products", productsRouter);
 app.use("/featured", featuredRouter);
 app.use("/order", order);
+app.use("/admin", admin);
 
 
 // catch 404 and forward to error handler

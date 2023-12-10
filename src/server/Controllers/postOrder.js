@@ -34,10 +34,7 @@ const postOrder = (req, res) => {
           return;
         }
         const customerId = results.insertId;
-        const currentDate = new Date()
-          .toISOString()
-          .slice(0, 19)
-          .replace("T", " ");
+        const currentDate = new Date();
         var paymentId = 0;
         orderData.paymentMethod == "cod" ? (paymentId = 1) : (paymentId = 2);
 
