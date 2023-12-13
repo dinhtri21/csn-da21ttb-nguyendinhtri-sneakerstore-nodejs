@@ -110,7 +110,6 @@ const postOrder = (req, res) => {
                   });
 
                   // const date =`${currentDate}`;
-
                   const templateData = {
                     date:currentDate,
                     orderId: orderId,

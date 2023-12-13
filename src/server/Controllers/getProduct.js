@@ -1,7 +1,6 @@
 const db = require("../db/db");
 
 const getProduct = (req, res) => {
-  console.log("nene he " + req.params.id)
   db.query(
     `SELECT 
         p.product_id,
