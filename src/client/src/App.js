@@ -13,12 +13,13 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminNavigation from "./components/Admin/AdminNavigation";
 import { useLocation } from "react-router-dom";
-import AdminHeader from "./components/Admin/AdminHeader";
 import AdminOrder from "./pages/Admin/AdminOrder";
+import AdminCustomer from "./pages/Admin/AdminCustomer";
 
 function App() {
   const location = useLocation();
   const currentPath = location.pathname;
+  
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // const [isAdminDashboardRoute, setIsAdminDashboardRoute] = useState(false);
@@ -65,7 +66,7 @@ function App() {
             )
           }
         />
-        {/* <Route
+        <Route 
           path="/admin/dashboard/order/:page"
           element={
             isAuthenticated ? (
@@ -74,10 +75,20 @@ function App() {
               <Navigate to="/admin" replace={true} />
             )
           }
-        /> */}
-        <Route path="/admin/dashboard/order/:page" element={<AdminOrder />} />
+        />
+         <Route 
+          path="/admin/dashboard/customer/:page"
+          element={
+            isAuthenticated ? (
+              <AdminCustomer />
+            ) : (
+              <Navigate to="/admin" replace={true} />
+            )
+          }
+        />
+      
         <Route
-          path="/admin/dashboard/products"
+          path="/admin/dashboard/products/:page"
           element={
             isAuthenticated ? (
               <AdminProducts />

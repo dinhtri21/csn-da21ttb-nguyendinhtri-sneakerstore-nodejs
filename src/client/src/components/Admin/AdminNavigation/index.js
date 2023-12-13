@@ -44,10 +44,12 @@ function AdminDashboard() {
           </div>
           <div className={cx("col-12")}>
             <Link
-              to="/admin/dashboard/products"
+              to="/admin/dashboard/products/1"
               className={cx(
                 "nav-item",
-                currentPath == "/admin/dashboard/products" ? "nav-active" : null
+                currentPath.indexOf("/admin/dashboard/products") !== -1
+                  ? "nav-active"
+                  : null
               )}
             >
               <CiSquareMore className={cx("nav-item-icon")} />
@@ -56,10 +58,12 @@ function AdminDashboard() {
           </div>
           <div className={cx("col-12")}>
             <Link
-              to="/admin/dashboard/customer"
+              to="/admin/dashboard/customer/1"
               className={cx(
                 "nav-item",
-                currentPath == "/admin/dashboard/customer" ? "nav-active" : null
+                currentPath.indexOf("/admin/dashboard/customer/") !== -1
+                  ? "nav-active"
+                  : null
               )}
             >
               <CiUser className={cx("nav-item-icon")} />

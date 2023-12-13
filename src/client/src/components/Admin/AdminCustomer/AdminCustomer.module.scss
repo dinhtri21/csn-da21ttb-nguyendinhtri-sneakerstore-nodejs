@@ -24,23 +24,22 @@
   width: 40px;
   width: 40px;
 }
-
-//product
-.title-product-container {
+//order
+.title-order-container {
   color: var(--black-color);
   font-weight: 500;
   font-size: 16px;
-  padding: 8px 0;
-  border-bottom: 1px solid #ccc;
-  //   border-left: 1px solid #ccc;
-  //   border-right: 1px solid #ccc;
+  padding: 4px 8px;
+  // border-bottom: 1px solid #ccc;
   // border-top: 1px solid #ccc;
   // border: 1px solid #ccc;
   margin-bottom: 8px;
 }
-.product-item {
-  //   padding: 8px 8px;
+
+.order-item {
+  padding: 8px 8px;
   margin-top: 15px;
+
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
@@ -49,45 +48,15 @@
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
-.product-img {
-  width: 100%;
-}
-.icon-product-handle-div {
-  // width: 100%;
-  // height: 100%;
-  display: flex;
-  padding: 5px;
-}
-.icon-product-handle {
-  width: 20px;
-  height: 20px;
-}
-//css chung
-.flex-center {
+.order-item-text {
+  color: var(--text-color-gray);
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
 }
-//Phân trang
-//page
-.page-container {
-  display: flex;
-  align-items: center;
+.icon-order-status {
+  margin-right: 8px;
 }
-.page-item {
-  font-size: 16px;
-  color: var(--black-color);
-  padding: 4px 8px;
-  // background-color: var(--white-color);
-  border: 1px solid var(--text-color-gray);
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-.page-item.page-active {
-  color: #ccc;
-}
-
 //Phân trang
 .page-container {
   // background-color: #ccc;
@@ -103,12 +72,12 @@
   align-items: center;
   overflow: hidden;
   /* From https://css.glass */
-  //   background: rgba(255, 255, 255, 0.2);
-  //   border-radius: 16px;
-  //   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  //   backdrop-filter: blur(5px);
-  //   -webkit-backdrop-filter: blur(5px);
-  //   border: 1px solid rgba(255, 255, 255, 0.8);
+//   background: rgba(255, 255, 255, 0.2);
+//   border-radius: 16px;
+//   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+//   backdrop-filter: blur(5px);
+//   -webkit-backdrop-filter: blur(5px);
+//   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 .pagination-item {
 }
@@ -117,17 +86,18 @@
   color: var(--black-color);
   cursor: pointer;
   display: flex;
-  //   padding: 4px 6px;
+//   padding: 4px 6px;
   font-size: 16px;
   font-weight: 400;
   height: 40px;
-  width: 40px;
+  width:  40px;
   justify-content: center;
   user-select: none;
 }
 .pagination-item-a.active {
   background-color: #ececec;
-  border-radius: 50%;
+  border-radius: 50%;  
 }
 .pagination-sub {
+
 }

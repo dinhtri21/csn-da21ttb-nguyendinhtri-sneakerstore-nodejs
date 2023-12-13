@@ -1,11 +1,6 @@
 import classNames from "classnames/bind";
-import styles from "./AdminOrder.module.scss";
+import styles from "./AdminCustomer.module.scss";
 import images from "../../../assets/images";
-import { Link } from "react-router-dom";
-import { FcProcess } from "react-icons/fc";
-import { FcInTransit } from "react-icons/fc";
-import { FcCancel } from "react-icons/fc";
-import { FcOk } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
@@ -14,26 +9,23 @@ import { BsChevronRight } from "react-icons/bs";
 
 const cx = classNames.bind(styles);
 
-function AdminOrder({ axiosProduct, page, orders }) {
+function AdminCustomer({ axiosProduct, page, customer }) {
   const navigate = useNavigate();
 
   const [amountPage, setAmountPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(page);
 
   useEffect(() => {
-    // Giả sử bạn có API trả về 7 sản phẩm và tổng số lượng (amountPage) là 7
-    if (orders[0]) {
-      setAmountPage(Math.ceil(orders[0].total_orders / 7));
+    if (customer[0]) {
+      setAmountPage(Math.ceil(customer[0].total_number_customer / 7));
     }
     setCurrentPage(page);
-    // setAmountPage(7);
-    // Các thao tác khác khi có dữ liệu từ API
-  }, [orders]);
+  }, [customer, page]);
 
   useEffect(() => {
     // Nếu bạn muốn gọi navigate và axiosProduct ở đây, thì hãy thêm điều kiện để tránh lặp vô tận
     if (currentPage !== page) {
-      navigate(`/admin/dashboard/order/${currentPage}`);
+      navigate(`/admin/dashboard/customer/${currentPage}`);
       axiosProduct(currentPage);
     }
   }, [currentPage]);
@@ -59,59 +51,37 @@ function AdminOrder({ axiosProduct, page, orders }) {
         </div>
         {/*  */}
         <div className={cx("row", "row-admin", "title-order-container")}>
-          <div className={cx("col-1")}>ID</div>
-          <div className={cx("col-3")}>Tên khách hàng</div>
-          <div className={cx("col-2")}>Ngày đặt</div>
-          <div className={cx("col-2")}>Tổng giá tiền</div>
-          <div className={cx("col-2")}>Tình trạng</div>
-          <div className={cx("col-2")}>Xử lý</div>
+          <div className={cx("col-1","flex-center")}>ID</div>
+          <div className={cx("col-2","flex-center")}>Họ và tên</div>
+          <div className={cx("col-3","flex-center")}>Email</div>
+          <div className={cx("col-2","flex-center")}>Số điện thoại</div>
+          <div className={cx("col-4","flex-center")}>Địa chỉ</div>
         </div>
-        {orders.map((order, index) => {
+        {customer.map((order, index) => {
           return (
             <div key={index} className={cx("row", "row-admin", "order-item")}>
-              <div className={cx("col-1", "order-item-text", "order-id")}>
-                {order.order_id}
+              <div className={cx("col-1","flex-center", "order-item-text", "order-id")}>
+                {order.customer_id}
               </div>
-              <div className={cx("col-3", "order-item-text")}>
-                {order.customer_name}
+              <div className={cx("col-2","flex-center", "order-item-text")}>
+                {order.fullname}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
-                {order.order_date}
+              <div className={cx("col-3","flex-center", "order-item-text")}>
+                {order.email}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
-                {Math.round(order.total_amount)
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                ₫
+              <div className={cx("col-2","flex-center", "order-item-text")}>
+                {order.phone_number}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
-                {order && order.order_status == "Đang xử lý" ? (
-                  <FcProcess className={cx("icon-order-status")} />
-                ) : null}
-                {order && order.order_status == "Đang vận chuyển" ? (
-                  <FcInTransit className={cx("icon-order-status")} />
-                ) : null}
-                {order && order.order_status == "Đã huỷ" ? (
-                  <FcCancel className={cx("icon-order-status")} />
-                ) : null}
-                {order && order.order_status == "Thành công" ? (
-                  <FcOk className={cx("icon-order-status")} />
-                ) : null}
-                {/* {order && order.order_status == "Đang xử lý" ? (
-                  <FcSupport />
-                ) : null} */}
-                {order.order_status}
-              </div>
-              <div className={cx("col-2", "order-item-text")}>
-                <Link>Hoá đơn</Link>
+              <div className={cx("col-4","flex-center", "order-item-text")}>
+                {order.address}
               </div>
             </div>
           );
         })}
 
+        {/* Thanh phân trang */}
         <div className={cx("row", "row-admin")}>
           <div className={cx("col-12", "flex-center", "page-container")}>
-            {/* Thanh phân trang */}
             <ReactPaginate
               previousLabel={<BsChevronLeft />}
               nextLabel={<BsChevronRight />}
@@ -130,11 +100,10 @@ function AdminOrder({ axiosProduct, page, orders }) {
             />
           </div>
         </div>
-
         {/*  */}
       </div>
     </div>
   );
 }
 
-export default AdminOrder;
+export default AdminCustomer;
