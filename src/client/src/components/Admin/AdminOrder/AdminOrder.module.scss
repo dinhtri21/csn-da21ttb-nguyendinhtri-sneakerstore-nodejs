@@ -19,9 +19,16 @@
 .admin-header-img {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
-
+.name-admin {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--black-color);
+  margin-right: 8px;
+}
 .img-admin {
+  border-radius: 50%;
   width: 40px;
   width: 40px;
 }

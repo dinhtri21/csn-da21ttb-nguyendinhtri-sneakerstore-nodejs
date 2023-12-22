@@ -51,10 +51,10 @@ function AdminOrder({ axiosProduct, page, orders }) {
             <h2 className={cx("title-page")}>ĐƠN ĐẶT HÀNG</h2>
           </div>
           <div className={cx("col-2", "admin-header-img")}>
-            <div className={cx("admin-img-container")}>
-              <img className={cx("img-admin")} src={images.login} />
-            </div>
             <div className={cx("name-admin")}>Admin</div>
+            <div className={cx("admin-img-container")}>
+              <img className={cx("img-admin")} src={images.user} />
+            </div>
           </div>
         </div>
         {/*  */}

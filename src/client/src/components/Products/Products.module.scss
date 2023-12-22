@@ -29,20 +29,20 @@
   overflow: hidden;
   //hot
   // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-  ::before {
-    top: 15px;
-    left: 0;
-    content: "HOT";
-    font-size: 10px;
-    color: #fff;
-    line-height: 15px;
-    text-align: center;
-    position: absolute;
-    display: block;
-    width: 30px;
-    height: 15px;
-    background-color: var(--primary-color);
-  }
+  // ::before {
+  //   top: 15px;
+  //   left: 0;
+  //   content: "NEW";
+  //   font-size: 10px;
+  //   color: #fff;
+  //   line-height: 15px;
+  //   text-align: center;
+  //   position: absolute;
+  //   display: block;
+  //   width: 30px;
+  //   height: 15px;
+  //   background-color: var(--primary-color);
+  // }
   &:hover {
     opacity: 0.8;
   }
@@ -129,4 +129,47 @@
 }
 .selected .brand-item-icon {
   fill: var(--primary-color);
+}
+
+//Phân trang
+.pagination-col {
+  
+}
+.page-container {
+  // background-color: #ccc;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination {
+  list-style-type: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* From https://css.glass */
+  //   background: rgba(255, 255, 255, 0.2);
+  //   border-radius: 16px;
+  //   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  //   backdrop-filter: blur(5px);
+  //   -webkit-backdrop-filter: blur(5px);
+  //   border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.pagination-item-a {
+  align-items: center;
+  color: var(--black-color);
+  cursor: pointer;
+  display: flex;
+
+  font-size: 16px;
+  font-weight: 400;
+  height: 40px;
+  width: 40px;
+  justify-content: center;
+  user-select: none;
+}
+.pagination-item-a.active {
+  background-color: #ececec;
+  border-radius: 50%;
 }

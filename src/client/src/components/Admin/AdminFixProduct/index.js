@@ -8,11 +8,9 @@ const cx = classNames.bind(styles);
 
 function AdminPopup({ product, isVisible, onClose }) {
   const [productData, setProductData] = useState();
-  const [variantsData, setVariantsData] = useState([]);
 
   useEffect(() => {
     setProductData(product);
-    setVariantsData(product.variants);
   }, [product]);
 
   if (!isVisible) {
@@ -27,12 +25,6 @@ function AdminPopup({ product, isVisible, onClose }) {
     }));
   };
 
-  const handleVariantChange = (index, field, value) => {
-    const newVariants = [...variantsData];
-    newVariants[index] = { ...newVariants[index], [field]: value };
-    setVariantsData(newVariants);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -41,7 +33,6 @@ function AdminPopup({ product, isVisible, onClose }) {
         `http://localhost:3001/admin/putAdminProduct`,
         {
           ...productData,
-          variants: variantsData,
         }
       );
 
@@ -124,12 +115,8 @@ function AdminPopup({ product, isVisible, onClose }) {
                 id="color"
                 type="text"
                 name="color"
-                value={
-                  variantsData && variantsData[0] ? variantsData[0].color : ""
-                }
-                onChange={(e) =>
-                  handleVariantChange(0, "color", e.target.value)
-                }
+                value={productData.color}
+                onChange={handleProductChange}
               ></input>
             </div>
           </div>
@@ -168,38 +155,35 @@ function AdminPopup({ product, isVisible, onClose }) {
           {/*  */}
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
-              <label htmlFor="size">Size và Số lượng</label>
+              <label htmlFor="brand">Size</label>
             </div>
-            <div className={cx("col-9")}>
-              {variantsData &&
-                variantsData.map((variant, index) => {
-                  return (
-                    <div key={index} className={cx("row")}>
-                      <div className={cx("col-6")}>
-                        <input
-                          className={cx("input-form")}
-                          type="text"
-                          value={variant.size}
-                          onChange={(e) =>
-                            handleVariantChange(index, "size", e.target.value)
-                          }
-                        ></input>
-                      </div>
-                      <div className={cx("col-6")}>
-                        <input
-                          className={cx("input-form")}
-                          type="text"
-                          value={variant.quantity}
-                          onChange={(e) =>
-                            handleVariantChange(0, "quantity", e.target.value)
-                          }
-                        ></input>
-                      </div>
-                    </div>
-                  );
-                })}
+            <div className={cx("col-3")}>
+              <input
+                className={cx("input-form")}
+                id="size"
+                type="text"
+                name="size"
+                value={productData.size}
+                onChange={handleProductChange}
+              />
             </div>
           </div>
+          <div className={cx("row")}>
+            <div className={cx("col-3", "label-div")}>
+              <label htmlFor="brand">Số lượng</label>
+            </div>
+            <div className={cx("col-3")}>
+              <input
+                className={cx("input-form")}
+                id="quantity"
+                type="text"
+                name="quantity"
+                value={productData.quantity}
+                onChange={handleProductChange}
+              />
+            </div>
+          </div>
+
           {/*  */}
 
           <div className={cx("row")}>

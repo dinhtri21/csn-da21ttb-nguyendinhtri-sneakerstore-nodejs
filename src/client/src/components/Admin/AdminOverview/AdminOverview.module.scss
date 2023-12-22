@@ -1,14 +1,22 @@
 //admin-header
 .admin-header {
   display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
 }
 .admin-header-img {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
-.admin-img-container {
+.name-admin {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--black-color);
+  margin-right: 8px;
 }
 .img-admin {
+  border-radius: 50%;
   width: 40px;
   width: 40px;
 }
@@ -58,4 +66,3 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
   min-height: 500px;
 }
-

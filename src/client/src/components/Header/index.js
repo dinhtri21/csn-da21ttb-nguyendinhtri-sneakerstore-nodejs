@@ -53,13 +53,10 @@ function Header() {
       }
     };
     handleUpNumberProduct();
-  }
-  , []);
+  }, []);
 
   const location = useLocation();
   const currentRoute = location.pathname;
-
-  console.log(currentRoute);
 
   const [menuOpen, setMenuOpen] = useState(false);
 

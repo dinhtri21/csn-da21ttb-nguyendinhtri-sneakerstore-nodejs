@@ -2,10 +2,12 @@ import classNames from "classnames/bind";
 import styles from "./AdminCustomer.module.scss";
 import images from "../../../assets/images";
 import { useEffect, useState } from "react";
+//Phân trang
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { BsChevronLeft } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
+//Phân trang
 
 const cx = classNames.bind(styles);
 
@@ -43,36 +45,43 @@ function AdminCustomer({ axiosProduct, page, customer }) {
             <h2 className={cx("title-page")}>ĐƠN ĐẶT HÀNG</h2>
           </div>
           <div className={cx("col-2", "admin-header-img")}>
-            <div className={cx("admin-img-container")}>
-              <img className={cx("img-admin")} src={images.login} />
-            </div>
             <div className={cx("name-admin")}>Admin</div>
+            <div className={cx("admin-img-container")}>
+              <img className={cx("img-admin")} src={images.user} />
+            </div>
           </div>
         </div>
         {/*  */}
         <div className={cx("row", "row-admin", "title-order-container")}>
-          <div className={cx("col-1","flex-center")}>ID</div>
-          <div className={cx("col-2","flex-center")}>Họ và tên</div>
-          <div className={cx("col-3","flex-center")}>Email</div>
-          <div className={cx("col-2","flex-center")}>Số điện thoại</div>
-          <div className={cx("col-4","flex-center")}>Địa chỉ</div>
+          <div className={cx("col-1", "flex-center")}>ID</div>
+          <div className={cx("col-2", "flex-center")}>Họ và tên</div>
+          <div className={cx("col-3", "flex-center")}>Email</div>
+          <div className={cx("col-2", "flex-center")}>Số điện thoại</div>
+          <div className={cx("col-4", "flex-center")}>Địa chỉ</div>
         </div>
         {customer.map((order, index) => {
           return (
             <div key={index} className={cx("row", "row-admin", "order-item")}>
-              <div className={cx("col-1","flex-center", "order-item-text", "order-id")}>
+              <div
+                className={cx(
+                  "col-1",
+                  "flex-center",
+                  "order-item-text",
+                  "order-id"
+                )}
+              >
                 {order.customer_id}
               </div>
-              <div className={cx("col-2","flex-center", "order-item-text")}>
+              <div className={cx("col-2", "flex-center", "order-item-text")}>
                 {order.fullname}
               </div>
-              <div className={cx("col-3","flex-center", "order-item-text")}>
+              <div className={cx("col-3", "flex-center", "order-item-text")}>
                 {order.email}
               </div>
-              <div className={cx("col-2","flex-center", "order-item-text")}>
+              <div className={cx("col-2", "flex-center", "order-item-text")}>
                 {order.phone_number}
               </div>
-              <div className={cx("col-4","flex-center", "order-item-text")}>
+              <div className={cx("col-4", "flex-center", "order-item-text")}>
                 {order.address}
               </div>
             </div>

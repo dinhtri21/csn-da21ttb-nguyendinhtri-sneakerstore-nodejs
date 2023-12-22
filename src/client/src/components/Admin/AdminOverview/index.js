@@ -116,10 +116,10 @@ function AdminOverview({ overViewData }) {
             </h2>
           </div>
           <div className={cx("col-2", "admin-header-img")}>
+            <div className={cx("name-admin")}>Nguyễn Đình Trí</div>
             <div className={cx("admin-img-container")}>
-              <img className={cx("img-admin")} src={images.login} />
+              <img className={cx("img-admin")} src={images.user} />
             </div>
-            <div className={cx("name-admin")}>Admin</div>
           </div>
         </div>
 

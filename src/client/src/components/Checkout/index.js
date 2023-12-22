@@ -10,7 +10,6 @@ import store, { updateCartItems } from "../../store";
 const cx = classNames.bind(styles);
 
 function Checkout({ products, handleGetProductsCart }) {
-  console.log(products);
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -114,7 +113,6 @@ function Checkout({ products, handleGetProductsCart }) {
         quantity: product.quantity_oder,
         size: product.size,
         price: product.price,
-        variance_id: product.variance_id,
         total_amount_product: product.total_amount_product,
       })),
       total_product_cart: products[0].total_amount_cart,
@@ -124,7 +122,7 @@ function Checkout({ products, handleGetProductsCart }) {
     const toastId1 = toast.loading("Vui lòng chờ...");
 
     const axiosCheckOut = async () => {
-      axios
+      await axios
         .post("http://localhost:3001/order", orderData)
         .then((response) => {
           console.log(response.data.message);
@@ -137,13 +135,19 @@ function Checkout({ products, handleGetProductsCart }) {
           ClearCart();
         })
         .catch((error) => {
-          console.log(error);
+          toast.update(toastId1, {
+            render: "Có lỗi xảy ra khi xử lý đơn đặt hàng.",
+            type: "error",
+            autoClose: 5000,
+            isLoading: false,
+          });
+          console.log(error + "akdjạk");
         });
     };
 
     setTimeout(() => {
       axiosCheckOut();
-    }, 3000);
+    }, 1000);
   };
   //END Tạo đối tượng đại diện cho đơn hàng //
   //BEGIN: CLEAR GIỎ HÀNG //
@@ -175,7 +179,7 @@ function Checkout({ products, handleGetProductsCart }) {
         draggable
         pauseOnHover
         theme="light"
-        style={{ width: "400px" }} 
+        style={{ width: "400px" }}
       />
       <div className={cx("grid", "grid-checkout")}>
         <div className={cx("row", "router-page-container")}>

@@ -8,7 +8,7 @@ function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/featured");
+        const response = await axios.get("http://localhost:3001/products/hot");
         console.log(response)
         setProducts(response.data);
       } catch (err) {

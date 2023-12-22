@@ -16,15 +16,6 @@ const cx = classNames.bind(styles);
 
 function AdminProducts({ axiosProducts, page, products }) {
   const navigate = useNavigate();
-  //Map size
-  const mapSize = (variants) => {
-    const stringVariants = variants.map((variant) => {
-      return `${variant.size}:${variant.quantity}`;
-    });
-
-    const resultString = stringVariants.join(", ");
-    return resultString;
-  };
 
   //Phân trang
   const [amountPage, setAmountPage] = useState(1);
@@ -82,10 +73,10 @@ function AdminProducts({ axiosProducts, page, products }) {
               <h2 className={cx("title-page")}>SẢN PHẨM</h2>
             </div>
             <div className={cx("col-2", "admin-header-img")}>
-              <div className={cx("admin-img-container")}>
-                <img className={cx("img-admin")} src={images.login} />
-              </div>
               <div className={cx("name-admin")}>Admin</div>
+              <div className={cx("admin-img-container")}>
+                <img className={cx("img-admin")} src={images.user} />
+              </div>
             </div>
           </div>
 
@@ -95,7 +86,8 @@ function AdminProducts({ axiosProducts, page, products }) {
             <div className={cx("col-3", "flex-center")}>Tên Sản phẩm</div>
             <div className={cx("col-1", "flex-center")}>Brand</div>
             <div className={cx("col-1", "flex-center")}>Màu</div>
-            <div className={cx("col-2", "flex-center")}>Size : Số lượng</div>
+            <div className={cx("col-1", "flex-center")}>Size</div>
+            <div className={cx("col-1", "flex-center")}>Số lượng</div>
             <div className={cx("col-2", "flex-center")}>Giá</div>
             <div className={cx("col-1", "flex-center")}>Xử lý</div>
           </div>
@@ -137,12 +129,17 @@ function AdminProducts({ axiosProducts, page, products }) {
                   {product.brand}
                 </div>
                 <div className={cx("col-1", "flex-center", "order-item-text")}>
-                  {product.variants[0].color}
+                  {product.color}
                 </div>
                 <div
-                  className={cx("col-2", "flex-center", "product-item-text")}
+                  className={cx("col-1", "flex-center", "product-item-text")}
                 >
-                  {mapSize(product.variants)}
+                  {product.size}
+                </div>
+                <div
+                  className={cx("col-1", "flex-center", "product-item-text")}
+                >
+                  {product.quantity}
                 </div>
                 <div
                   className={cx("col-2", "flex-center", "product-item-text")}

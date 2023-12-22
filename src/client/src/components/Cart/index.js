@@ -14,7 +14,6 @@ const cx = classNames.bind(styles);
 function Cart({ products, updateCart }) {
   console.log(products);
 
-
   // START: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
   const handleCountProductsCart = async () => {
     try {
@@ -33,15 +32,14 @@ function Cart({ products, updateCart }) {
     }
   };
   // END: ĐẾM SẢN PHẨM TRONG GIỎ HÀNG //
-  const handleQuantityChange = async (productId, size, quantity) => {
-    console.log(productId, size, quantity);
+  const handleQuantityChange = async (product_id, quantity) => {
+    console.log(product_id, quantity);
     try {
       const response = await axios.post(
         "http://localhost:3001/cart/updateProductCart",
         {
-          productId,
+          product_id,
           quantity,
-          size,
         },
         {
           withCredentials: true,
@@ -80,16 +78,16 @@ function Cart({ products, updateCart }) {
       console.error("Error removing product:", error);
     }
   };
-  const handleDecreaseQuantity = (productId, size, currentQuantity) => {
+  const handleDecreaseQuantity = (product_id, currentQuantity) => {
     if (currentQuantity > 1) {
       const newQuantity = currentQuantity - 1;
-      handleQuantityChange(productId, size, newQuantity);
+      handleQuantityChange(product_id, newQuantity);
     }
   };
 
-  const handleIncreaseQuantity = (productId, size, currentQuantity) => {
+  const handleIncreaseQuantity = (product_id, currentQuantity) => {
     const newQuantity = currentQuantity + 1;
-    handleQuantityChange(productId, size, newQuantity);
+    handleQuantityChange(product_id, newQuantity);
   };
 
   return (
@@ -143,9 +141,12 @@ function Cart({ products, updateCart }) {
                   <div className={cx("col-2")}>Thành Tiền</div>
                 </div>
                 {products.map((product, index) => {
+                  const urlName = product.name
+                    .replace(/\s+/g, "-")
+                    .toLowerCase();
                   return (
                     <div
-                      to={`/products/${product.product_id}`}
+                      to={`/products/${urlName}`}
                       className={cx("row", "products")}
                       key={index}
                     >
@@ -153,7 +154,7 @@ function Cart({ products, updateCart }) {
                         <img src={product.image1}></img>
                       </div>
                       <Link
-                        to={`/products/${product.product_id}`}
+                        to={`/products/${urlName}`}
                         className={cx("col-4", "product-title", "ali-center")}
                       >
                         {product.name}
@@ -173,7 +174,6 @@ function Cart({ products, updateCart }) {
                             onClick={() =>
                               handleDecreaseQuantity(
                                 product.product_id,
-                                product.size,
                                 product.quantity_oder
                               )
                             }
@@ -188,7 +188,6 @@ function Cart({ products, updateCart }) {
                             onClick={() =>
                               handleIncreaseQuantity(
                                 product.product_id,
-                                product.size,
                                 product.quantity_oder
                               )
                             }
@@ -199,9 +198,10 @@ function Cart({ products, updateCart }) {
                         </div>
                       </div>
                       <div className={cx("col-2", "ali-center")}>
-                        {product.total_amount_product
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                        {product.total_amount_product &&
+                          product.total_amount_product
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                         ₫
                       </div>
                       <button
@@ -237,22 +237,23 @@ function Cart({ products, updateCart }) {
                 </p>
               </div>
             </div>
-            <div className={cx("row")}>
-              <div className={cx("col-6", "total-amount-title-container")}>
-                <h2 className={cx("total-amount-title")}>Tổng tiền</h2>
+            {products.length > 0 && products[0].total_amount_cart && (
+              <div className={cx("row")}>
+                <div className={cx("col-6", "total-amount-title-container")}>
+                  <h2 className={cx("total-amount-title")}>Tổng tiền</h2>
+                </div>
+                <div className={cx("col-6")}>
+                  <h2 className={cx("total-amount")}>
+                    {products[0].total_amount_cart
+                      ? products[0].total_amount_cart
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                      : 0}
+                    ₫
+                  </h2>
+                </div>
               </div>
-              <div className={cx("col-6")}>
-                <h2 className={cx("total-amount")}>
-                  {products[0]
-                    ? products[0].total_amount_cart
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                    : 0}
-                  ₫
-                </h2>
-              </div>
-            </div>
-
+            )}
             <div className={cx("row")}>
               <div className={cx("col-12")}>
                 <Link to={"/checkout"} className={cx("col-12", "checkout-btn")}>
