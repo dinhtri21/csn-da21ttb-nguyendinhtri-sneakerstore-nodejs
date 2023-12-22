@@ -6,9 +6,9 @@ const addProductToCart = require("../Controllers/addProductToCart");
 const getFeaturedProducts = require("../Controllers/getFeaturedProducts");
 const getProductFilter = require("../Controllers/getProductFilter");
 
-router.get("/", getListProducts.getListProducts);
+router.get("/hot", getListProducts.getListProducts);
 router.get("/filter", getProductFilter.getProductFilter);
-router.get("/:id", getProduct.getProduct);
+router.get("/:name", getProduct.getProduct);
 router.get("/addToCart", addProductToCart.addProductToCart);
 router.get("/featured", getFeaturedProducts.getFeaturedProducts);
 

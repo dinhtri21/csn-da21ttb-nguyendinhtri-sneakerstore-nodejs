@@ -3,8 +3,9 @@ const db = require("../db/db");
 function getProductCart(req, res) {
   const cart = req.session.cart || [];
   // Tạo mảng các điều kiện cho mỗi sản phẩm trong giỏ hàng
+  console.log(cart)
   const conditions = cart.map((item) => {
-    return ` (p.product_id = ${item.productId} AND v.size = '${item.size}') `;
+    return ` (product_id = ${item.product_id}) `;
   });
   const whereClause = conditions.join(" OR ");
 
@@ -12,9 +13,8 @@ function getProductCart(req, res) {
     res.json([]);
   } else {
     db.query(
-      `SELECT p.*, v.size, v.color, v.quantity, v.variance_id
-      FROM products p
-      JOIN variance v ON p.product_id = v.product_id
+      `SELECT *
+      FROM products
       WHERE ${whereClause}`,
       (err, results) => {
         if (err) {
@@ -31,7 +31,7 @@ function getProductCart(req, res) {
           const newResults = results.map((result) => {
             const existingProduct = req.session.cart.find((item) => {
               return (
-                item.productId == result.product_id && item.size == result.size
+                item.product_id == result.product_id
               );
             });
             const quantity_oder = existingProduct.quantity;

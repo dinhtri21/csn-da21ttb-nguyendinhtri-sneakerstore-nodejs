@@ -17,6 +17,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^9.0.2",
     "memorystore": "^1.6.7",
+    "moment-timezone": "^0.5.43",
     "morgan": "~1.9.1",
     "mysql2": "^3.6.3",
     "nodemailer": "^6.9.7",
