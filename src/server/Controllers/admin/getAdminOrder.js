@@ -10,8 +10,10 @@ const getAdminOrder = (req, res) => {
     `SELECT
         o.order_id AS order_id,
         c.fullname AS customer_name,
+        o.customer_id AS customer_id,
         o.order_status AS order_status,
         o.total AS total_amount,
+        o.order_note AS order_note,
         DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS order_date,
         COUNT(*) OVER() AS total_orders
     FROM

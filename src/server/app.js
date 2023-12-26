@@ -7,10 +7,10 @@ var session = require("express-session");
 
 var indexRouter = require("./routes/index");
 var productsRouter = require("./routes/products");
-var featuredRouter = require("./routes/featuredProducts");
+
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
-var admin = require("./routes/admin")
+var admin = require("./routes/admin");
 
 const cors = require("cors");
 
@@ -35,8 +35,10 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 // Kích hoạt CORS cho tất cả các tài nguyên
@@ -45,10 +47,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/cart", cartRouter);
 app.use("/products", productsRouter);
-app.use("/featured", featuredRouter);
+
 app.use("/order", order);
 app.use("/admin", admin);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -67,4 +68,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-

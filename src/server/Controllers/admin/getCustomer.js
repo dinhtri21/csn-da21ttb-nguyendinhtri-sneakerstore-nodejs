@@ -9,7 +9,8 @@ const getCustomer = (req, res) => {
   db.query(
     `SELECT *,
     COUNT(*) OVER() AS total_number_customer
-    FROM customer 
+    FROM customer
+    ORDER BY customer_id DESC 
     LIMIT ?, ?;`,
     [startIndex, itemsPerPage],
     (err, result) => {
@@ -26,5 +27,5 @@ const getCustomer = (req, res) => {
 };
 
 module.exports = {
-    getCustomer,
+  getCustomer,
 };
