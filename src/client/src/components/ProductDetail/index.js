@@ -12,7 +12,7 @@ import SlideShowProducts from "../Other/SlideProducts";
 const cx = classNames.bind(styles);
 
 function ProductDetail({ product }) {
-  console.log(product)
+  console.log(product);
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct_id, setSelectedProduct_id] = useState(0);
 
@@ -136,10 +136,14 @@ function ProductDetail({ product }) {
                       onClick={() => handleSelectedProduct_id(item.product_id)}
                       key={index}
                       value={item.product_id}
+                      disabled={item.quantity == 0 ? true : false}
                       className={cx(
                         "size",
                         item.product_id === selectedProduct_id
                           ? "selected"
+                          : null,
+                        item.quantity == 0
+                          ? "sold"
                           : null
                       )}
                     >

@@ -9,7 +9,8 @@ const images = {
    nike_logo: require('./Nike-Logo.png'),
    adidas_logo: require('./Adidas-Logo.png'),
    converse_logo: require('./Converse-logo.jpg'),
-   balenciaga_logo: require('./Balenciaga-Logo.jpg')
+   balenciaga_logo: require('./Balenciaga-Logo.jpg'),
+   size_chart: require('./bang-size-giay.png')
 }
 
 

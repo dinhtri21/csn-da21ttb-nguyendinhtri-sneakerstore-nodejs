@@ -46,9 +46,10 @@ function BodyHome({ products }) {
         </div>
         <div className={cx("row", "products-container")}>
           {productsNew.map((product, index) => {
+            const urlName = product.name.replace(/\s+/g, "-").toLowerCase();
             return (
               <Link
-                to={`/products/${product.product_id}`}
+                to={`/products/${urlName}`}
                 className={cx("product-item", "col-3", "col-half")}
                 key={index}
               >
@@ -83,22 +84,22 @@ function BodyHome({ products }) {
           </div>
         </div>
         <div className={cx("row")}>
-          <div className={cx("col-3")}>
+          <div className={cx("col-3", "col-half")}>
             <img className={cx("img-logo-brand")} src={images.nike_logo}></img>
           </div>
-          <div className={cx("col-3")}>
+          <div className={cx("col-3", "col-half")}>
             <img
               className={cx("img-logo-brand")}
               src={images.adidas_logo}
             ></img>
           </div>
-          <div className={cx("col-3")}>
+          <div className={cx("col-3", "col-half")}>
             <img
               className={cx("img-logo-brand")}
               src={images.balenciaga_logo}
             ></img>
           </div>
-          <div className={cx("col-3")}>
+          <div className={cx("col-3", "col-half")}>
             <img
               className={cx("img-logo-brand")}
               src={images.converse_logo}

@@ -46,7 +46,6 @@
   &:hover {
     opacity: 0.8;
   }
- 
 }
 .product-img {
   // border-bottom: 1px solid #ccc;
@@ -133,7 +132,6 @@
 
 //Phân trang
 .pagination-col {
-  
 }
 .page-container {
   // background-color: #ccc;
@@ -172,4 +170,131 @@
 .pagination-item-a.active {
   background-color: #ececec;
   border-radius: 50%;
+}
+//search-input
+
+
+
+
+.search-container {
+  --input-bg: #fff;
+  --padding: 20px;
+  --rotate: 80deg;
+  --gap: 16px;
+  --height: 40px;
+  width: 200px;
+  padding-inline-end: 4px;
+  background: var(--input-bg);
+  position: relative;
+  border-radius: 4px;
+  label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--height);
+    
+  }
+  input {
+    width: 100%;
+    padding-inline-start: calc(var(--padding) + var(--gap));
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 16px;
+    &:focus {
+      ~ {
+        .icon {
+          transform: rotate(var(--rotate)) scale(1.3);
+          .swap-off {
+            opacity: 1;
+            transform: rotate(-80deg);
+            visibility: visible;
+            color:  #15a986;
+          }
+          .swap-on {
+            opacity: 0;
+            visibility: visible;
+          }
+        }
+      }
+    }
+    &:active {
+      ~ {
+        .icon {
+          transform: scale(1.3) rotate(var(--rotate));
+          .swap-off {
+            opacity: 1;
+            visibility: visible;
+            color:  #15a986;
+          }
+          .swap-on {
+            opacity: 0;
+            visibility: visible;
+          }
+        }
+        .close-btn {
+          opacity: 1;
+          visibility: visible;
+          transform: scale(1);
+          transition: 0s;
+        }
+      }
+    }
+  }
+  svg {
+    color: #111;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute;
+    height: 15px;
+  }
+}
+.icon {
+  cursor: pointer;
+  position: absolute;
+  left: var(--padding);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.swap-off {
+  transform: rotate(-80deg);
+  opacity: 0;
+  visibility: hidden;
+}
+// .close-btn {
+//   background: none;
+//   border: none;
+//   right: calc(var(--padding) - var(--gap));
+//   box-sizing: border-box;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: #111;
+//   padding: 0.1em;
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 50%;
+//   transition: 0.3s;
+//   opacity: 0;
+//   transform: scale(0);
+//   visibility: hidden;
+// }
+
+//loading
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.8); /* Màu nền với độ mờ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Đảm bảo overlay nằm trên mọi thành phần khác */
+}
+
+.loading-icon {
+  font-size: 50px; /* Đặt kích thước biểu tượng loading */
 }

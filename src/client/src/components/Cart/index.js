@@ -150,68 +150,97 @@ function Cart({ products, updateCart }) {
                       className={cx("row", "products")}
                       key={index}
                     >
-                      <div className={cx("col-1", "ali-center", "img-product")}>
-                        <img src={product.image1}></img>
+                      <div className={cx("col-1", "col-m-2")}>
+                        <div className={cx("row")}>
+                          <div className={cx("col-12", "img-product-div")}>
+                            <img
+                              className={cx("img-product")}
+                              src={product.image1}
+                            ></img>
+                          </div>
+                        </div>
                       </div>
-                      <Link
-                        to={`/products/${urlName}`}
-                        className={cx("col-4", "product-title", "ali-center")}
-                      >
-                        {product.name}
-                      </Link>
-                      <div className={cx("col-1", "ali-center")}>
-                        {product.size}
-                      </div>
-                      <div className={cx("col-2", "ali-center")}>
-                        {Math.round(product.price)
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                        ₫
-                      </div>
-                      <div className={cx("col-2", "ali-center")}>
-                        <div className={cx("quantity")}>
-                          <button
-                            onClick={() =>
-                              handleDecreaseQuantity(
-                                product.product_id,
-                                product.quantity_oder
-                              )
-                            }
-                            className={cx("quantity-Div")}
+                      <div className={cx("col-11", "col-m-10")}>
+                        <div className={cx("row")}>
+                          <Link
+                            to={`/products/${urlName}`}
+                            className={cx(
+                              "col-4",
+                              "product-title",
+                              "col-m-11",
+                              "ali-center"
+                            )}
                           >
-                            -
-                          </button>
-                          <div className={cx("quantity-display")}>
-                            {product.quantity_oder}
+                            {product.name}
+                          </Link>
+                          <div className={cx("col-1", "ali-center", "col-m-1")}>
+                            {product.size}
+                          </div>
+                          <div className={cx("col-2", "ali-center", "col-m-8")}>
+                            {Math.round(product.price)
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            ₫
+                          </div>
+                          <div
+                            className={cx(
+                              "col-2",
+                              "ali-center",
+                              "col-m-4",
+                              "quantity-mobile"
+                            )}
+                          >
+                            <div className={cx("quantity")}>
+                              <button
+                                onClick={() =>
+                                  handleDecreaseQuantity(
+                                    product.product_id,
+                                    product.quantity_oder
+                                  )
+                                }
+                                className={cx("quantity-Div")}
+                              >
+                                -
+                              </button>
+                              <div className={cx("quantity-display")}>
+                                {product.quantity_oder}
+                              </div>
+                              <button
+                                onClick={() =>
+                                  handleIncreaseQuantity(
+                                    product.product_id,
+                                    product.quantity_oder
+                                  )
+                                }
+                                className={cx("quantity-Div")}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            className={cx("col-2", "ali-center", "col-m-12")}
+                          >
+                            {product.total_amount_product &&
+                              product.total_amount_product
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            ₫
                           </div>
                           <button
                             onClick={() =>
-                              handleIncreaseQuantity(
+                              handleRemoveProduct(
                                 product.product_id,
-                                product.quantity_oder
+                                product.size
                               )
                             }
-                            className={cx("quantity-Div")}
+                            className={cx("remove-product-btn")}
                           >
-                            +
+                            <CiSquareRemove />
                           </button>
                         </div>
                       </div>
-                      <div className={cx("col-2", "ali-center")}>
-                        {product.total_amount_product &&
-                          product.total_amount_product
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                        ₫
-                      </div>
-                      <button
-                        onClick={() =>
-                          handleRemoveProduct(product.product_id, product.size)
-                        }
-                        className={cx("remove-product-btn")}
-                      >
-                        <CiSquareRemove />
-                      </button>
+                      {/*  */}
                     </div>
                   );
                 })}
@@ -222,6 +251,7 @@ function Cart({ products, updateCart }) {
           </div>
 
           {/* pay */}
+
           <div className={cx("col-3", "pay")}>
             <div className={cx("row")}>
               <div className={cx("col-12", "pay-title")}>
@@ -231,9 +261,8 @@ function Cart({ products, updateCart }) {
             <div className={cx("row")}>
               <div className={cx("col-12")}>
                 <p>
-                  Phí vận chuyển sẽ được tính ở trang thanh toán.
-                  <br></br>
-                  Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.
+                  Thông tin giao hàng sẽ nằm ở trang thanh toán. Bạn cũng có thể
+                  nhập mã giảm giá ở trang thanh toán.
                 </p>
               </div>
             </div>

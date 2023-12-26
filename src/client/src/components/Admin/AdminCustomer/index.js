@@ -42,7 +42,7 @@ function AdminCustomer({ axiosProduct, page, customer }) {
       <div className={cx("grid", "grid-admin")}>
         <div className={cx("row", "row-admin", "admin-header")}>
           <div className={cx("col-10")}>
-            <h2 className={cx("title-page")}>ĐƠN ĐẶT HÀNG</h2>
+            <h2 className={cx("title-page")}>KHÁCH HÀNG</h2>
           </div>
           <div className={cx("col-2", "admin-header-img")}>
             <div className={cx("name-admin")}>Admin</div>

@@ -7,8 +7,8 @@
   z-index: 999;
   // background-color: #f6f7f7;
   background-color: #fff;
-    // background-color:rgba(250, 250, 250, 0.95);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  // background-color:rgba(250, 250, 250, 0.95);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 //logo
 .logo {
@@ -29,7 +29,7 @@
 }
 //navigations
 .navigations {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -50,20 +50,23 @@
     transition: transform 0.25s;
   }
 }
-.active-nav{
+.active-nav {
   &::before {
     display: block;
     content: "";
     height: 2px;
-    width: calc(100% + 20px) ;
+    width: calc(100% + 20px);
     background-color: #000000aa;
     position: absolute;
     top: 56px;
     left: 50%;
     transform: translateX(-50%);
+    @media (max-width: 740px) {
+      display: none;
+    }
   }
 }
-.nav-item.active-nav{
+.nav-item.active-nav {
   position: relative;
   // color: #929292;
 }

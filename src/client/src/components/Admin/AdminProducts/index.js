@@ -1,8 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./AdminProducts.module.scss";
 import images from "../../../assets/images";
-import { FcSupport } from "react-icons/fc";
+import { FcDataConfiguration } from "react-icons/fc";
 import { FcDeleteDatabase } from "react-icons/fc";
+import { FcAddDatabase } from "react-icons/fc";
+import { FcDatabase } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +13,13 @@ import { BsChevronRight } from "react-icons/bs";
 import AdminPopup from "../AdminFixProduct";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import AdminAddProduct from "../AdminAddProduct";
 
 const cx = classNames.bind(styles);
 
 function AdminProducts({ axiosProducts, page, products }) {
   const navigate = useNavigate();
+  const [addProductSuccess, setAddProductSuccess] = useState(false);
 
   //Phân trang
   const [amountPage, setAmountPage] = useState(1);
@@ -29,12 +33,23 @@ function AdminProducts({ axiosProducts, page, products }) {
   }, [products, page]);
 
   useEffect(() => {
-    // Nếu bạn muốn gọi navigate và axiosProduct ở đây, thì hãy thêm điều kiện để tránh lặp vô tận
     if (currentPage !== page) {
       navigate(`/admin/dashboard/products/${currentPage}`);
       axiosProducts(currentPage);
     }
   }, [currentPage]);
+
+  //Sau khi xoá sản phẩm hay thêm
+  const handleAddProductSuccess = () => {
+    setAddProductSuccess(true);
+  };
+
+  useEffect(() => {
+    if (addProductSuccess) {
+      setCurrentPage(1);
+      setAddProductSuccess(false);
+    }
+  }, [addProductSuccess]);
 
   const handlePageChange = ({ selected }) => {
     const newPage = selected + 1;
@@ -44,23 +59,42 @@ function AdminProducts({ axiosProducts, page, products }) {
   //POPUP sửa sản phẩm //
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectProduct, setSelectProduct] = useState({});
+  const [disabledInputPopup, setDisabledInputPopup] = useState(false);
 
   const togglePopup = (product) => {
     setPopupVisible((prevState) => !prevState);
     setSelectProduct(product);
   };
+  //
+  const [isPopupVisible1, setPopupVisible1] = useState(false);
+
+  const togglePopupAddProduct = (product) => {
+    setPopupVisible1((prevState) => !prevState);
+    // setSelectProduct(product);
+  };
+
   //POPUP sửa sản phẩm //
   //BEGIN: XOÁ SẢN PHẨM//
   const handleDeleteProduct = async (productId) => {
-    try {
-      // Thực hiện logic xoá sản phẩm ở đây, có thể sử dụng Axios hoặc phương thức xoá của API
-      await axios.delete(`/api/products/${productId}`);
-
-      // Sau khi xoá thành công, cập nhật danh sách sản phẩm bằng cách gọi hàm axiosProducts
-      axiosProducts(currentPage);
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      // Xử lý lỗi nếu cần
+    const userConfirmed = window.confirm("Bạn có chắc chắn muốn xoá?");
+    if (userConfirmed) {
+      // Xử lý khi người dùng xác nhận
+      try {
+        const response = await axios.delete(
+          `http://localhost:3001/admin/delete/${productId}`
+        );
+        if (response.status === 200) {
+          axiosProducts(1);
+          console.log("Xoá thành công!");
+        } else {
+          console.error("Xoá thất bại ", response.statusText);
+        }
+      } catch (error) {
+        console.error("Xoá thất bại:", error);
+      }
+    } else {
+      return;
+      // Xử lý khi người dùng hủy bỏ
     }
   };
   //END: XOÁ SẢN PHẨM//
@@ -151,11 +185,24 @@ function AdminProducts({ axiosProducts, page, products }) {
                   <button
                     onClick={() => {
                       togglePopup(product);
+                      setDisabledInputPopup(true);
+                    }}
+                    className={cx("icon-product-handle-div")}
+                    title="Xem chi tiết"
+                  >
+                    <FcDatabase className={cx("icon-product-handle")} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      togglePopup(product);
+                      setDisabledInputPopup(false);
                     }}
                     className={cx("icon-product-handle-div")}
                     title="Sửa"
                   >
-                    <FcSupport className={cx("icon-product-handle")} />
+                    <FcDataConfiguration
+                      className={cx("icon-product-handle")}
+                    />
                   </button>
                   <button
                     to={"#"}
@@ -171,8 +218,28 @@ function AdminProducts({ axiosProducts, page, products }) {
           })}
           {/* Thanh phân trang */}
           <div className={cx("row", "row-admin")}>
-            <div className={cx("col-12", "flex-center", "page-container")}>
+            <div className={cx("col-3", "page-container", "btn-add-container")}>
+              <button
+                className={cx("btn-add-product")}
+                onClick={() => {
+                  togglePopupAddProduct();
+                }}
+              >
+                <FcAddDatabase
+                  fontSize={"20"}
+                  className={cx("icon-add-product")}
+                />
+                <span>THÊM SẢN PHẨM MỚI</span>
+              </button>
+              <AdminAddProduct
+                isVisible={isPopupVisible1}
+                onClose={togglePopupAddProduct}
+                onAddProductSuccess={handleAddProductSuccess}
+              />
+            </div>
+            <div className={cx("col-9", "page-container")}>
               <ReactPaginate
+                forcePage={currentPage - 1}
                 previousLabel={<BsChevronLeft />}
                 nextLabel={<BsChevronRight />}
                 breakLabel={"..."}
@@ -195,9 +262,11 @@ function AdminProducts({ axiosProducts, page, products }) {
       </div>
       {/* popup */}
       <AdminPopup
+        disabledInputPopup={disabledInputPopup}
         product={selectProduct}
         isVisible={isPopupVisible}
         onClose={togglePopup}
+        onAddProductSuccess={handleAddProductSuccess}
       />
     </>
   );

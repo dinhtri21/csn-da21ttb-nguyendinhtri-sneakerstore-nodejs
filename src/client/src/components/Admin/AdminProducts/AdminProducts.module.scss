@@ -47,6 +47,7 @@
 }
 .product-item {
   //   padding: 8px 8px;
+  max-height: 100px;
   margin-top: 15px;
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.2);
@@ -57,17 +58,22 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 .product-img {
-  width: 100%;
+  height: 60px;
+  width: 60px;
 }
 .icon-product-handle-div {
-  // width: 100%;
-  // height: 100%;
+  cursor: pointer;
   display: flex;
   padding: 5px;
+  border:  none;
+  background-color: transparent;
 }
 .icon-product-handle {
   width: 20px;
   height: 20px;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 //css chung
 .flex-center {
@@ -82,6 +88,7 @@
   align-items: center;
 }
 .page-item {
+  
   font-size: 16px;
   color: var(--black-color);
   padding: 4px 8px;
@@ -97,10 +104,9 @@
 
 //Phân trang
 .page-container {
-  // background-color: #ccc;
   margin-top: 8px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 .pagination {
@@ -109,13 +115,6 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  /* From https://css.glass */
-  //   background: rgba(255, 255, 255, 0.2);
-  //   border-radius: 16px;
-  //   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  //   backdrop-filter: blur(5px);
-  //   -webkit-backdrop-filter: blur(5px);
-  //   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 .pagination-item {
 }
@@ -137,4 +136,33 @@
   border-radius: 50%;
 }
 .pagination-sub {
+}
+//btn-add-container
+.btn-add-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.btn-add-product {
+  padding: 8px 40px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  /* From https://css.glass */
+  // background: var(--white-color);
+  background: #43a048;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.btn-add-product span {
+  color: var(--white-color);
+}
+.icon-add-product {
+  transform: translateY(4px);
+  margin-right: 4px;
 }

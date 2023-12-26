@@ -63,6 +63,7 @@
 .size {
   text-align: center;
   // border-radius: 4px;
+  position: relative;
   height: 30px;
   width: 30px;
   line-height: 30px;
@@ -70,7 +71,7 @@
   font-size: 12px;
   font-weight: 600;
   // background-color: #ccc;
-  color: var(--gray-color);
+  color: var(--black-color);
   background-color: #fff;
   border: 1px solid #e3e3e3;
   cursor: pointer;
@@ -79,9 +80,30 @@
     border: 1px solid #636363;
   }
 }
+.size.sold {
+  &:hover {
+    color: var(--black-color);
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    
+  }
+  &::before {
+    position: absolute;
+    content: "Sold";
+    font-size: 10px;
+    color: #f44336;
+    opacity: 0.8;
+    font-weight: 900;
+    height: 100%;
+    width: 100%;
+    top: -15px;
+    right: 0px;
+    // transform: rotate(45deg);
+  }
+}
 .size.selected {
-  border: 1px solid var(--blue-color);
-  color: var(--blue-color);
+  border: 1px solid var(--black-color);
+  color: var(--black-color);
 }
 //quantity
 .product-quantity {

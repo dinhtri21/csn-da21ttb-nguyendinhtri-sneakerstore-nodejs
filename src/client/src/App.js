@@ -15,6 +15,7 @@ import AdminNavigation from "./components/Admin/AdminNavigation";
 import { useLocation } from "react-router-dom";
 import AdminOrder from "./pages/Admin/AdminOrder";
 import AdminCustomer from "./pages/Admin/AdminCustomer";
+import About from "./pages/About"
 
 function App() {
   const location = useLocation();
@@ -44,6 +45,7 @@ function App() {
         <Route path="/products/:name" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/about" element={<About />} />
 
         <Route
           path="/admin"

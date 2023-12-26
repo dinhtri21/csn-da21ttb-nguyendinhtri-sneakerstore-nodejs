@@ -3,27 +3,29 @@ import styles from "./AdminPopup.module.scss";
 import { VscCloseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function AdminPopup({
-  product,
-  isVisible,
-  onClose,
-  onAddProductSuccess,
-  disabledInputPopup,
-}) {
-  const [productData, setProductData] = useState();
-
-  useEffect(() => {
-    setProductData(product);
-  }, [product]);
+function AdminPopup({ isVisible, onClose, onAddProductSuccess }) {
+  const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [productData, setProductData] = useState({
+    name: "",
+    description: "",
+    color: "",
+    price: "",
+    brand: "",
+    size: "",
+    quantity: "",
+  });
 
   if (!isVisible) {
     return null;
   }
 
-  const handleProductChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProductData((prevData) => ({
       ...prevData,
@@ -31,30 +33,57 @@ function AdminPopup({
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    // Kiểm tra xem có file được chọn hay không
+    if (file) {
+      // Kiểm tra định dạng file
+      if (file.type.startsWith("image/")) {
+        // Nếu là file ảnh, tiến hành xử lý
+        setImageFile(file);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Nếu không phải là file ảnh, thông báo và đặt giá trị của input về null
+        alert("Vui lòng chọn một file ảnh.");
+        e.target.value = null; // Đặt giá trị của input về null để yêu cầu người dùng nhập lại
+      }
+    }
+  };
+
+  const handleAddProduct = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("description", productData.description);
+    formData.append("color", productData.color);
+    formData.append("price", productData.price);
+    formData.append("brand", productData.brand);
+    formData.append("size", productData.size);
+    formData.append("quantity", productData.quantity);
+    formData.append("image1", imageFile);
+
     try {
-      // Gửi dữ liệu về server
-      const response = await axios.put(
-        `http://localhost:3001/admin/putAdminProduct`,
-        {
-          ...productData,
-        }
+      const response = await axios.post(
+        `http://localhost:3001/admin/addProduct`,
+        formData
       );
 
-      if (response.status === 200) {
-        console.log(response);
-        onClose();
+      if (response.status === 201) {
+        console.log("Product added successfully");
         onAddProductSuccess();
-        // // Cập nhật UI nếu thành công
-        // onUpdate({ ...productData, variants: variantsData });
-        // onClose(); // Đóng popup sau khi cập nhật thành công
+        onClose();
+        navigate(`/admin/dashboard/products/${1}`);
       } else {
-        // Xử lý lỗi nếu có
-        console.error("Update failed");
+        console.error("Error adding product:", response.statusText);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error adding product:", error);
     }
   };
 
@@ -63,38 +92,49 @@ function AdminPopup({
       <div className={cx("grid", "grid-popup")}>
         <div className={cx("row")}>
           <div className={cx("col-11")}>
-            {disabledInputPopup ? (
-              <h1 className={cx("title-popup")}>XEM SẢN PHẨM</h1>
-            ) : (
-              <h1 className={cx("title-popup")}>SỬA SẢN PHẨM</h1>
-            )}
+            <h1 className={cx("title-popup")}>THÊM SẢN PHẨM</h1>
           </div>
           <div onClick={onClose} className={cx("col-1", "close")}>
             <VscCloseAll className={cx("close-icon")} />
           </div>
         </div>
         {/*  */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAddProduct} encType="multipart/form-data">
           {/* Form cho thông tin product */}
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
-              <label htmlFor="id">Hình ảnh</label>
+              <label htmlFor="brand">Ảnh</label>
             </div>
-            <div className={cx("col-4", "flex-center")}>
-              <img className={cx("product-img")} src={productData.image1} />
+            <div className={cx("col-3")}>
+              <input
+                className={cx("input-form")}
+                id="image1"
+                type="file"
+                name="image1"
+                onChange={handleImageChange}
+                required
+              />
             </div>
+          </div>
+          <div className={cx("row")}>
+            <div className={cx("col-3")}></div>
+            {imagePreview && (
+              <div className={cx("col-9", "imagePreview-div")}>
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className={cx("imagePreview")}
+                />
+              </div>
+            )}
           </div>
 
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
               <label htmlFor="id">Mã sản phẩm (ID)</label>
             </div>
-            <div className={cx("col-3")}>
-              <input
-                className={cx("input-form")}
-                disabled
-                value={productData.product_id}
-              ></input>
+            <div className={cx("col-9")}>
+              <span>Tự động</span>
             </div>
           </div>
           {/*  */}
@@ -109,8 +149,8 @@ function AdminPopup({
                 type="text"
                 name="name"
                 value={productData.name}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
+                required
+                onChange={handleInputChange}
               ></input>
             </div>
           </div>
@@ -122,14 +162,16 @@ function AdminPopup({
             <div className={cx("col-9")}>
               <textarea
                 className={cx("input-form")}
-                value={productData.description}
-                onChange={handleProductChange}
+                val
                 name="description"
                 id="description"
+                value={productData.description}
+                onChange={handleInputChange}
+                required
               ></textarea>
             </div>
           </div>
-          {/* ...... */}
+          {/*  */}
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
               <label htmlFor="color">Màu sắc</label>
@@ -141,8 +183,8 @@ function AdminPopup({
                 type="text"
                 name="color"
                 value={productData.color}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
+                required
+                onChange={handleInputChange}
               ></input>
             </div>
             {/*  */}
@@ -153,16 +195,15 @@ function AdminPopup({
               <input
                 className={cx("input-form")}
                 id="price"
-                type="text"
+                type="number"
                 name="price"
-                onChange={handleProductChange}
                 value={productData.price}
-                disabled={disabledInputPopup ? true : false}
+                required
+                onChange={handleInputChange}
               ></input>
             </div>
           </div>
-
-          {/* ..... */}
+          {/* .... */}
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
               <label htmlFor="brand">Thương hiệu</label>
@@ -173,9 +214,9 @@ function AdminPopup({
                 id="brand"
                 type="text"
                 name="brand"
-                value={productData.brand}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
+                value={productData.brand} // Lấy giá trị từ state
+                required
+                onChange={handleInputChange} // Gọi hàm xử lý khi có sự thay đổi
               />
             </div>
             {/*  */}
@@ -186,42 +227,39 @@ function AdminPopup({
               <input
                 className={cx("input-form")}
                 id="size"
-                type="text"
+                type="number"
                 name="size"
                 value={productData.size}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
+                required
+                onChange={handleInputChange}
               />
             </div>
           </div>
-          {/* ..... */}
           <div className={cx("row")}>
             <div className={cx("col-3", "label-div")}>
               <label htmlFor="brand">Số lượng</label>
             </div>
             <div className={cx("col-3")}>
               <input
-                type="number"
-                min="0"
                 className={cx("input-form")}
                 id="quantity"
+                type="number"
                 name="quantity"
                 value={productData.quantity}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
+                required
+                onChange={handleInputChange}
               />
             </div>
           </div>
 
-          {/* .... */}
+          {/*  */}
+
           <div className={cx("row")}>
-            {disabledInputPopup == false ? (
-              <div className={cx("col-7", "btn-submit-div")}>
-                <button className={cx("btn-submit")} type="submit">
-                  Lưu
-                </button>
-              </div>
-            ) : null}
+            <div className={cx("col-12", "btn-submit-div")}>
+              <button className={cx("btn-submit")} type="submit">
+                Lưu
+              </button>
+            </div>
           </div>
         </form>
       </div>

@@ -6,9 +6,12 @@ import axios from "axios";
 function AdminProducts() {
     const [products, setProducts] = useState([]);
     const { page } = useParams();
+    const [currentPage, setCurrentPage] = useState(page);
+
     useEffect(() => {
       axiosProducts(page);
-    }, []);
+      setCurrentPage(page)
+    }, [page]);
     
     const axiosProducts = async (page) => {
       try {
@@ -18,6 +21,8 @@ function AdminProducts() {
             withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
           }
         );
+        
+        setCurrentPage(page);
         setProducts(response.data);
         console.log(products);
       } catch (err) {
@@ -25,7 +30,7 @@ function AdminProducts() {
       }
     };
   
-  return <AdminProductsComponent page = {page} axiosProducts={axiosProducts} products={products}/>;
+  return <AdminProductsComponent page = {currentPage} axiosProducts={axiosProducts} products={products}/>;
 }
 
 export default AdminProducts;

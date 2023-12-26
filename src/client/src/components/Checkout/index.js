@@ -136,12 +136,11 @@ function Checkout({ products, handleGetProductsCart }) {
         })
         .catch((error) => {
           toast.update(toastId1, {
-            render: "Có lỗi xảy ra khi xử lý đơn đặt hàng.",
+            render: error.response.data.error,
             type: "error",
             autoClose: 5000,
             isLoading: false,
           });
-          console.log(error + "akdjạk");
         });
     };
 
@@ -419,6 +418,7 @@ function Checkout({ products, handleGetProductsCart }) {
                         onChange={handlePaymentMethodChange}
                         value="bacs"
                         required
+                        disabled
                       ></input>
                       <label
                         htmlFor="payment_method_bacs"

@@ -59,33 +59,52 @@ function AdminOrder({ axiosProduct, page, orders }) {
         </div>
         {/*  */}
         <div className={cx("row", "row-admin", "title-order-container")}>
-          <div className={cx("col-1")}>ID</div>
-          <div className={cx("col-3")}>Tên khách hàng</div>
-          <div className={cx("col-2")}>Ngày đặt</div>
-          <div className={cx("col-2")}>Tổng giá tiền</div>
-          <div className={cx("col-2")}>Tình trạng</div>
-          <div className={cx("col-2")}>Xử lý</div>
+          <div className={cx("col-1", "flex-center")}>ID Đơn</div>
+          <div className={cx("col-1", "flex-center")}>ID Khách</div>
+          <div className={cx("col-2", "flex-center")}>Tên khách hàng</div>
+          <div className={cx("col-2", "flex-center")}>Ngày đặt</div>
+          <div className={cx("col-2", "flex-center")}>Tổng giá tiền</div>
+          <div className={cx("col-1", "flex-center")}>Tình trạng</div>
+          <div className={cx("col-2", "flex-center")}>Ghi chú</div>
         </div>
         {orders.map((order, index) => {
           return (
             <div key={index} className={cx("row", "row-admin", "order-item")}>
-              <div className={cx("col-1", "order-item-text", "order-id")}>
+              <div
+                className={cx(
+                  "col-1",
+                  "flex-center",
+                  "order-item-text",
+                  "order-id"
+                )}
+              >
                 {order.order_id}
               </div>
-              <div className={cx("col-3", "order-item-text")}>
+              <div
+                className={cx(
+                  "col-1",
+                  "flex-center",
+                  "order-item-text",
+                  "order-id"
+                )}
+              >
+                {order.customer_id}
+              </div>
+              <div className={cx("col-2", "flex-center", "order-item-text")}>
                 {order.customer_name}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
+              <div className={cx("col-2", "flex-center", "order-item-text")}>
                 {order.order_date}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
+              <div className={cx("col-2", "flex-center", "order-item-text")}>
                 {Math.round(order.total_amount)
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                 ₫
               </div>
-              <div className={cx("col-2", "order-item-text")}>
-                {order && order.order_status == "Đang xử lý" ? (
+
+              <div className={cx("col-1", "flex-center")}>
+                {/* {order && order.order_status == "Đang xử lý" ? (
                   <FcProcess className={cx("icon-order-status")} />
                 ) : null}
                 {order && order.order_status == "Đang vận chuyển" ? (
@@ -96,14 +115,13 @@ function AdminOrder({ axiosProduct, page, orders }) {
                 ) : null}
                 {order && order.order_status == "Thành công" ? (
                   <FcOk className={cx("icon-order-status")} />
-                ) : null}
-                {/* {order && order.order_status == "Đang xử lý" ? (
-                  <FcSupport />
                 ) : null} */}
                 {order.order_status}
               </div>
-              <div className={cx("col-2", "order-item-text")}>
-                <Link>Hoá đơn</Link>
+              <div
+                className={cx("col-3", "order-item-text", "order-note-text")}
+              >
+                {order.order_note}
               </div>
             </div>
           );

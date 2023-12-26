@@ -43,23 +43,23 @@ function Footer() {
             <h4 className={cx("title")}>Hỗ trợ</h4>
             <ul>
               <li>
-                <Link to={"/"} className={cx("footer-link")}>
-                  Hướng dẫn đặt hàng
+                <Link to={"/about"} className={cx("footer-link")}>
+                  Hướng dẫn mua hàng
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className={cx("footer-link")}>
-                  Giao hàng
+                <Link to={"/about"} className={cx("footer-link")}>
+                  Bảo hành đổi và trả
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className={cx("footer-link")}>
+                <Link to={"/about"} className={cx("footer-link")}>
                   Hướng dẫn chọn size
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className={cx("footer-link")}>
-                  Chính sách đổi trả
+                <Link to={"/about"} className={cx("footer-link")}>
+                  Thông tin liên hệ
                 </Link>
               </li>
             </ul>
@@ -87,7 +87,7 @@ function Footer() {
               </li>
               <li>
                 <Link to={"/"} className={cx("social-link")}>
-                  <RiPinterestLine  className={cx("social-icon")} />
+                  <RiPinterestLine className={cx("social-icon")} />
                   <span className={cx("footer-link")}>Pinterest</span>
                 </Link>
               </li>
@@ -95,7 +95,7 @@ function Footer() {
           </div>
         </div>
         <div className={cx("row")}>
-          <div className={cx("col-12","footer-all-rights")}>
+          <div className={cx("col-12", "footer-all-rights")}>
             @2023 SNEAKERSTORE. All rights reserved.
           </div>
         </div>
