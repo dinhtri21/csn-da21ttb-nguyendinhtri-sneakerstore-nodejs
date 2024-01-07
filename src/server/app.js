@@ -1,3 +1,4 @@
+require('dotenv').config(); // Đặt ở đầu file để load biến môi trường từ file .env
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -44,10 +45,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // Kích hoạt CORS cho tất cả các tài nguyên
 
 //router
+
 app.use("/", indexRouter);
 app.use("/cart", cartRouter);
 app.use("/products", productsRouter);
-
 app.use("/order", order);
 app.use("/admin", admin);
 

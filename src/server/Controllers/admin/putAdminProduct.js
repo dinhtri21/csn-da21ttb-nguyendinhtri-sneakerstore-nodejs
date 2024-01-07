@@ -4,6 +4,7 @@ const putAdminProduct = (req, res) => {
   const { product_id, name, description, price, brand, color, quantity } =
     req.body;
 
+    console.log(req.body);
   db.beginTransaction((err) => {
     if (err) {
       console.error("Lỗi khi bắt đầu giao dịch: " + err);

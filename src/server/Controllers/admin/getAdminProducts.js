@@ -7,9 +7,12 @@ const getAdminProducts = (req, res) => {
   const startIndex = (page - 1) * itemsPerPage;
 
   db.query(
-    `SELECT p.*, COUNT(*) OVER() AS total_number_products
-        FROM products p
-        LIMIT ${startIndex}, ${itemsPerPage};`,
+    `SELECT
+        p.*,
+        CONCAT('http://${process.env.BASE_URL}/images/', p.image1) AS image1,
+        COUNT(*) OVER() AS total_number_products
+    FROM products p
+    LIMIT ${startIndex}, ${itemsPerPage};`,
     (errProduct, resultProduct) => {
       if (errProduct) {
         console.error("Lỗi truy vấn sản phẩm: " + errProduct);

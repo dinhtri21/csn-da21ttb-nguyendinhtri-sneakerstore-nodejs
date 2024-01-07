@@ -13,7 +13,16 @@ function getProductCart(req, res) {
     res.json([]);
   } else {
     db.query(
-      `SELECT *
+      `SELECT
+        product_id,
+        name,
+        description,
+        price,
+        CONCAT('http://${process.env.BASE_URL}/images', image1) AS image1,
+        brand,
+        color,
+        size,
+        quantity
       FROM products
       WHERE ${whereClause}`,
       (err, results) => {

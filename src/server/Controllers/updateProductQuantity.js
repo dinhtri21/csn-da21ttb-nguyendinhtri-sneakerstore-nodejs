@@ -1,7 +1,7 @@
 // Add this route in your server code
 const updateProductQuantity = (req, res) => {
   const { product_id, quantity } = req.body;
-  console.log(req.body)
+
   if (!req.session.cart) {
     return res.status(400).json({ message: "Cart not found" });
   }

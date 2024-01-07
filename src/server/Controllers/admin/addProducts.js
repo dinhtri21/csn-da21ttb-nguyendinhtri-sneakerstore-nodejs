@@ -28,7 +28,7 @@ const addProduct = (req, res) => {
         req.body;
 
         
-      const image1 = `http://localhost:3001/images/${req.file.filename}`;
+      const image1 = `/${req.file.filename}`;
 
 
       const result = db.query(

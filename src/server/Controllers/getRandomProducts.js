@@ -1,21 +1,26 @@
+
 const db = require("../db/db");
 
-const getFeaturedProducts = (req, res) => {
+const getRandomProducts = (req, res) => {
   // Sử dụng DISTINCT và ORDER BY RAND() để lấy một sản phẩm duy nhất từ mỗi nhóm tên
   db.query("SELECT DISTINCT * FROM products ORDER BY RAND() LIMIT 12", (err, results) => {
     if (err) {
       console.error("Lỗi truy vấn listproduct: " + err);
       res.status(500).json({ error: "Internal Server Error" });
     } else {
-      const listProducts = results.map((result) => {
-        return result;
+      // Cập nhật đường dẫn hình ảnh sử dụng biến môi trường
+      const updatedResults = results.map((result) => {
+        return {
+          ...result,
+          image1: `http://${process.env.BASE_URL}/images${result.image1}`,
+        };
       });
-      res.json(listProducts);
+      res.json(updatedResults);
     }
   });
 };
 
 module.exports = {
-  getFeaturedProducts,
+  getRandomProducts,
   // Các hàm xử lý yêu cầu khác có thể được thêm vào tùy theo nhu cầu của bạn.
 };
