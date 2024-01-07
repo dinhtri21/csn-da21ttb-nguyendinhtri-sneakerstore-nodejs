@@ -8,17 +8,18 @@ import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 const cx = classNames.bind(styles);
 
 function AdminDashboard() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  console.log(currentPath);
-  function handleLogout() {
-    // Xóa token khỏi localStorage
 
-    localStorage.removeItem("token");
+  function handleLogout() {
+    // Xóa token khỏi cookie
+    Cookies.remove("token");
+  
     alert("Đăng xuất thành công!");
     window.location.href = "/admin"; // Chuyển hướng đến trang đăng nhập
   }

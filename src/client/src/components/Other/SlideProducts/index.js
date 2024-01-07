@@ -23,7 +23,7 @@ function SlideShowProducts({ products_props, title }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/featured");
+      const response = await axios.get("http://localhost:3001/products/random");
       setProducts(response.data);
     } catch (err) {
       console.log("Error: " + err);
@@ -49,7 +49,7 @@ function SlideShowProducts({ products_props, title }) {
       <div className={cx("row")}>
         <div className={cx("col-12")}>
           <h2 className={cx("title-slide-show")}>
-            {title ? title : "CÁC SẢN PHẨM KHÁC"}
+            {title ? title : "MỘT SỐ SẢN PHẨM KHÁC"}
           </h2>
         </div>
       </div>

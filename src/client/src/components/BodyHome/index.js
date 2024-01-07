@@ -41,7 +41,7 @@ function BodyHome({ products }) {
       <div className={cx("grid")}>
         <div className={cx("row")}>
           <div className={cx("col-12")}>
-            <h3 className={cx("title-body")}>SẢN PHẨM MỚI</h3>
+            <h3 className={cx("title-body")}>SẢN PHẨM NỔI BẬT</h3>
           </div>
         </div>
         <div className={cx("row", "products-container")}>
@@ -75,7 +75,7 @@ function BodyHome({ products }) {
         </div> */}
         <SlideShowProducts
           products_props={products}
-          title={"CÁC SẢN PHẨM NỔI BẬT"}
+          title={"MỘT SỐ SẢN PHẨM KHÁC"}
         />
 
         <div className={cx("row")}>

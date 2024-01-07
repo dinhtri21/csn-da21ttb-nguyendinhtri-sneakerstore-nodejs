@@ -3,6 +3,7 @@ import styles from "./AdminPopup.module.scss";
 import { VscCloseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +14,7 @@ function AdminPopup({
   onAddProductSuccess,
   disabledInputPopup,
 }) {
-  const [productData, setProductData] = useState();
+  const [productData, setProductData] = useState({});
 
   useEffect(() => {
     setProductData(product);
@@ -27,18 +28,25 @@ function AdminPopup({
     const { name, value } = e.target;
     setProductData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value !== undefined ? value : prevData[name],
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       // Gửi dữ liệu về server
+      const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.put(
         `http://localhost:3001/admin/putAdminProduct`,
         {
-          ...productData,
+          ...productData
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Thêm token vào header
+          },
         }
       );
 
@@ -108,10 +116,10 @@ function AdminPopup({
                 id="name"
                 type="text"
                 name="name"
-                value={productData.name}
+                value={productData?.name || ""}
                 onChange={handleProductChange}
                 disabled={disabledInputPopup ? true : false}
-              ></input>
+              />
             </div>
           </div>
           {/*  */}

@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import AdminOrder from "./pages/Admin/AdminOrder";
 import AdminCustomer from "./pages/Admin/AdminCustomer";
 import About from "./pages/About"
+import Cookies from "js-cookie";
 
 function App() {
   const location = useLocation();
@@ -26,7 +27,7 @@ function App() {
   // const [isAdminDashboardRoute, setIsAdminDashboardRoute] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token"); // Thay đổi từ localStorage sang Cookies
     setIsAuthenticated(!!token);
   }, []);
 
@@ -57,7 +58,6 @@ function App() {
             )
           }
         />
-
         <Route
           path="/admin/dashboard"
           element={

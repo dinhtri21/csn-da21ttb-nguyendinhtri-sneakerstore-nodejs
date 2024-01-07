@@ -15,7 +15,6 @@ function ProductDetail({ product }) {
   console.log(product);
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct_id, setSelectedProduct_id] = useState(0);
-
   //handle
   const handleDecreaseQuantity = () => {
     setQuantity(quantity + 1);

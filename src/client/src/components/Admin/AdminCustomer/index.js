@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { BsChevronLeft } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
+import Cookies from "js-cookie";
 //Phân trang
 
 const cx = classNames.bind(styles);

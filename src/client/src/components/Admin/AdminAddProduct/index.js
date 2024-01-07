@@ -4,6 +4,7 @@ import { VscCloseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -69,9 +70,16 @@ function AdminPopup({ isVisible, onClose, onAddProductSuccess }) {
     formData.append("image1", imageFile);
 
     try {
+      const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.post(
         `http://localhost:3001/admin/addProduct`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Thêm token vào header
+          
+          },
+        }
       );
 
       if (response.status === 201) {

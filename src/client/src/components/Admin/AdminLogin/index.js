@@ -4,6 +4,7 @@ import images from "../../../assets/images";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -36,20 +37,20 @@ function AdminLogin() {
 
   const handleLogin = () => {
     const axiosLogin = async () => {
-      axios
-        .post("http://localhost:3001/admin/login", { email, password })
-        .then((response) => {
-          clearToken();
-          console.log(response.data);
-          saveToken(response.data.token);
-          alert("Đăng nhập thành công!");
-          window.location.href = "/admin/dashboard";
-          // navigate("/admin/dashboard");
-        })
-        .catch((error) => {
-          console.log(error.response.data.message);
-        });
+      try {
+        const response = await axios.post("http://localhost:3001/admin/login", { email, password });
+  
+        // Lưu cookie với tên "token"
+        Cookies.set("token", response.data.token, { expires: 1 / 24 }); // Hết hạn sau 1 giờ
+        alert("Đăng nhập thành công!");
+       
+        console.log( response)
+       window.location.href = "/admin/dashboard";
+      } catch (error) {
+        console.error(error.response.data.message);
+      }
     };
+  
     axiosLogin();
   };
 

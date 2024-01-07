@@ -10,10 +10,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsChevronLeft } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
-import AdminPopup from "../AdminFixProduct";
+import AdminPopup from "../AdminPopup";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import AdminAddProduct from "../AdminAddProduct";
+import Cookies from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -80,8 +81,14 @@ function AdminProducts({ axiosProducts, page, products }) {
     if (userConfirmed) {
       // Xử lý khi người dùng xác nhận
       try {
+        const token = Cookies.get("token"); // Lấy token từ cookie
         const response = await axios.delete(
-          `http://localhost:3001/admin/delete/${productId}`
+          `http://localhost:3001/admin/delete/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.status === 200) {
           axiosProducts(1);
