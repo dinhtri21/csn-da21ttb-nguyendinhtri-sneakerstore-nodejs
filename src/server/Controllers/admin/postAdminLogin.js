@@ -25,7 +25,7 @@ const postAdminLogin = (req, res) => {
         const admin = result[0];
 
         const secretKey = "your-secret-key"; // Thay thế bằng khóa bí mật thực tế của bạn để sử dụng trong production
-        const expiresIn = "1h";
+        const expiresIn = "6h";
 
         const header = {
           alg: "HS256", // Thuật toán được sử dụng cho chữ ký, trong trường hợp này là HMAC SHA-256
@@ -40,13 +40,14 @@ const postAdminLogin = (req, res) => {
         //Tạo token
         const token = jwt.sign(payload, secretKey, { expiresIn, header });
 
-        console.log(token);
-        // Tạo cookie và đặt giá trị là token
-        const cookieOptions = {
-          httpOnly: true,
-          expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // Hết hạn sau 1 giờ (tương ứng với expiresIn)
-        };
-        const cookieSerialized = serialize("token", token, cookieOptions);
+     
+        //Tạo cookie và đặt giá trị là token
+        // const cookieOptions = {
+        //   httpOnly: true,
+        //   maxAge: expiresIn,
+        // };
+
+        // const cookieSerialized = serialize("token", token, cookieOptions);
 
         // Trả token trực tiếp trong phản hồi JSON
         res.status(200).json({ token, message: "Thành công" });

@@ -133,7 +133,7 @@ const updateProductQuantities = async (
           checkRemainingQuantity(productId, res, (hasNegativeQuantity) => {
             if (hasNegativeQuantity) {
               allProductsAvailable = false;
-              reject("Sản phẩm đã hết!");
+              reject("Sản đã hết hoặc không đủ số lượng!");
             }
             resolve();
           });
