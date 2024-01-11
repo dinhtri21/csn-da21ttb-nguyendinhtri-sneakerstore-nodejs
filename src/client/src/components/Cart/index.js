@@ -133,12 +133,21 @@ function Cart({ products, updateCart }) {
                     <h3>GIỎ HÀNG CỦA BẠN</h3>
                   </div>
                   {/* </div> */}
-                  <div className={cx("col-1")}>Ảnh</div>
-                  <div className={cx("col-4")}>Tên sản phẩm</div>
-                  <div className={cx("col-1")}>Size</div>
-                  <div className={cx("col-2")}>Giá</div>
-                  <div className={cx("col-2")}>Số lượng</div>
-                  <div className={cx("col-2")}>Thành Tiền</div>
+
+                  <div className={cx("col-1", "col-m-2")}>
+                    <div className={cx("row")}>
+                      <div className={cx("col-12")}>Ảnh</div>
+                    </div>
+                  </div>
+                  <div className={cx("col-11")}>
+                    <div className={cx("row")}>
+                      <div className={cx("col-4")}>Tên sản phẩm</div>
+                      <div className={cx("col-1")}>Size</div>
+                      <div className={cx("col-2")}>Giá</div>
+                      <div className={cx("col-2")}>Số lượng</div>
+                      <div className={cx("col-3")}>Thành Tiền</div>
+                    </div>
+                  </div>
                 </div>
                 {products.map((product, index) => {
                   const urlName = product.name
@@ -219,7 +228,7 @@ function Cart({ products, updateCart }) {
                             </div>
                           </div>
                           <div
-                            className={cx("col-2", "ali-center", "col-m-12")}
+                            className={cx("col-3", "ali-center", "col-m-12")}
                           >
                             {product.total_amount_product &&
                               product.total_amount_product

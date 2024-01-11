@@ -15,9 +15,12 @@ function ProductDetail({ product }) {
   console.log(product);
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct_id, setSelectedProduct_id] = useState(0);
+  const [quantityStock, setSelectedQuantityStock] = useState(0);
   //handle
   const handleDecreaseQuantity = () => {
-    setQuantity(quantity + 1);
+    if (quantity < quantityStock) {
+      setQuantity(quantity + 1);
+    }
   };
   const handleIncreaseQuantity = () => {
     if (quantity > 1) {
@@ -43,8 +46,10 @@ function ProductDetail({ product }) {
   };
   // END: ĐÉM SẢN PHẨM TRONG GIỎ HÀNG //
   //select Size
-  const handleSelectedProduct_id = (product_id) => {
+  const handleSelectedProduct_id = (item, product_id) => {
+    setQuantity(1);
     setSelectedProduct_id(product_id);
+    setSelectedQuantityStock(item.quantity);
   };
   //handle addtocart
   const handleAddToCart = async () => {
@@ -124,15 +129,20 @@ function ProductDetail({ product }) {
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
               ₫
             </h2>
+            <h4 className={cx("brand-title")}>Brand: 
+                <span className={cx("brand-title-text")}>{product[0] && product[0].brand} </span>
+            </h4>
+
             <div className={cx("product-size")}>
-              {/* Thêm kiểm tra để đảm bảo product và product.variants tồn tại trước khi map */}
               {product && (
                 <div className={cx("product-size")}>
                   <h3 className={cx("size-title")}>Size:</h3>
                   {product.map((item, index) => (
                     <button
                       type="radio"
-                      onClick={() => handleSelectedProduct_id(item.product_id)}
+                      onClick={() =>
+                        handleSelectedProduct_id(item, item.product_id)
+                      }
                       key={index}
                       value={item.product_id}
                       disabled={item.quantity == 0 ? true : false}
@@ -141,9 +151,7 @@ function ProductDetail({ product }) {
                         item.product_id === selectedProduct_id
                           ? "selected"
                           : null,
-                        item.quantity == 0
-                          ? "sold"
-                          : null
+                        item.quantity == 0 ? "sold" : null
                       )}
                     >
                       {item.size}
@@ -168,6 +176,13 @@ function ProductDetail({ product }) {
                 >
                   +
                 </button>
+              </div>
+              <div>
+                {selectedProduct_id !== 0 ? (
+                  <div className={cx("quantity-stock")}>
+                    {quantityStock} sản phẩm có sẵn
+                  </div>
+                ) : null}
               </div>
             </div>
             <button

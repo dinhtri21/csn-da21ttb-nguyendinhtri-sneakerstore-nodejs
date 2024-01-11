@@ -16,6 +16,7 @@ function AdminPopup({
 }) {
   const [productData, setProductData] = useState({});
 
+  console.log(product);
   useEffect(() => {
     setProductData(product);
   }, [product]);
@@ -41,7 +42,7 @@ function AdminPopup({
       const response = await axios.put(
         `http://localhost:3001/admin/putAdminProduct`,
         {
-          ...productData
+          ...productData,
         },
         {
           headers: {
@@ -89,7 +90,9 @@ function AdminPopup({
               <label htmlFor="id">Hình ảnh</label>
             </div>
             <div className={cx("col-4", "flex-center")}>
-              <img className={cx("product-img")} src={productData.image1} />
+              {productData && (
+                <img className={cx("product-img")} src={productData.image1} />
+              )}
             </div>
           </div>
 
@@ -98,11 +101,13 @@ function AdminPopup({
               <label htmlFor="id">Mã sản phẩm (ID)</label>
             </div>
             <div className={cx("col-3")}>
-              <input
-                className={cx("input-form")}
-                disabled
-                value={productData.product_id}
-              ></input>
+              {productData && (
+                <input
+                  className={cx("input-form")}
+                  disabled
+                  value={productData.product_id}
+                ></input>
+              )}
             </div>
           </div>
           {/*  */}
@@ -111,15 +116,17 @@ function AdminPopup({
               <label htmlFor="name">Tên sản phẩm</label>
             </div>
             <div className={cx("col-9")}>
-              <input
-                className={cx("input-form", "input-form-name")}
-                id="name"
-                type="text"
-                name="name"
-                value={productData?.name || ""}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
-              />
+              {productData && (
+                <input
+                  className={cx("input-form", "input-form-name")}
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={productData?.name || ""}
+                  onChange={handleProductChange}
+                  disabled={disabledInputPopup ? true : false}
+                />
+              )}
             </div>
           </div>
           {/*  */}
@@ -128,13 +135,16 @@ function AdminPopup({
               <label htmlFor="description">Mô tả</label>
             </div>
             <div className={cx("col-9")}>
-              <textarea
-                className={cx("input-form")}
-                value={productData.description}
-                onChange={handleProductChange}
-                name="description"
-                id="description"
-              ></textarea>
+              {productData && (
+                <textarea
+                  className={cx("input-form")}
+                  value={productData.description}
+                  onChange={handleProductChange}
+                  name="description"
+                  id="description"
+                  disabled={disabledInputPopup ? true : false}
+                ></textarea>
+              )}
             </div>
           </div>
           {/* ...... */}
@@ -143,30 +153,34 @@ function AdminPopup({
               <label htmlFor="color">Màu sắc</label>
             </div>
             <div className={cx("col-4")}>
-              <input
-                className={cx("input-form")}
-                id="color"
-                type="text"
-                name="color"
-                value={productData.color}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
-              ></input>
+              {productData && (
+                <input
+                  className={cx("input-form")}
+                  id="color"
+                  type="text"
+                  name="color"
+                  value={productData.color}
+                  onChange={handleProductChange}
+                  disabled={disabledInputPopup ? true : false}
+                ></input>
+              )}
             </div>
             {/*  */}
             <div className={cx("col-2", "label-div")}>
               <label htmlFor="price">Giá</label>
             </div>
             <div className={cx("col-3")}>
-              <input
-                className={cx("input-form")}
-                id="price"
-                type="text"
-                name="price"
-                onChange={handleProductChange}
-                value={productData.price}
-                disabled={disabledInputPopup ? true : false}
-              ></input>
+              {productData && (
+                <input
+                  className={cx("input-form")}
+                  id="price"
+                  type="text"
+                  name="price"
+                  onChange={handleProductChange}
+                  value={productData.price}
+                  disabled={disabledInputPopup ? true : false}
+                ></input>
+              )}
             </div>
           </div>
 
@@ -176,30 +190,34 @@ function AdminPopup({
               <label htmlFor="brand">Thương hiệu</label>
             </div>
             <div className={cx("col-4")}>
-              <input
-                className={cx("input-form")}
-                id="brand"
-                type="text"
-                name="brand"
-                value={productData.brand}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
-              />
+              {productData && (
+                <input
+                  className={cx("input-form")}
+                  id="brand"
+                  type="text"
+                  name="brand"
+                  value={productData.brand}
+                  onChange={handleProductChange}
+                  disabled={disabledInputPopup ? true : false}
+                />
+              )}
             </div>
             {/*  */}
             <div className={cx("col-2", "label-div")}>
               <label htmlFor="brand">Size</label>
             </div>
             <div className={cx("col-3")}>
-              <input
-                className={cx("input-form")}
-                id="size"
-                type="text"
-                name="size"
-                value={productData.size}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
-              />
+              {productData && (
+                <input
+                  className={cx("input-form")}
+                  id="size"
+                  type="text"
+                  name="size"
+                  value={productData.size}
+                  onChange={handleProductChange}
+                  disabled={disabledInputPopup ? true : false}
+                />
+              )}
             </div>
           </div>
           {/* ..... */}
@@ -208,16 +226,18 @@ function AdminPopup({
               <label htmlFor="brand">Số lượng</label>
             </div>
             <div className={cx("col-3")}>
-              <input
-                type="number"
-                min="0"
-                className={cx("input-form")}
-                id="quantity"
-                name="quantity"
-                value={productData.quantity}
-                onChange={handleProductChange}
-                disabled={disabledInputPopup ? true : false}
-              />
+              {productData && (
+                <input
+                  type="number"
+                  min="0"
+                  className={cx("input-form")}
+                  id="quantity"
+                  name="quantity"
+                  value={productData.quantity}
+                  onChange={handleProductChange}
+                  disabled={disabledInputPopup ? true : false}
+                />
+              )}
             </div>
           </div>
 

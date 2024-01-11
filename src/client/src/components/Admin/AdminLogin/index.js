@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -38,24 +39,42 @@ function AdminLogin() {
   const handleLogin = () => {
     const axiosLogin = async () => {
       try {
-        const response = await axios.post("http://localhost:3001/admin/login", { email, password });
-  
+        const response = await axios.post("http://localhost:3001/admin/login", {
+          email,
+          password,
+        });
+
         // Lưu cookie với tên "token"
         Cookies.set("token", response.data.token, { expires: 1 / 24 }); // Hết hạn sau 1 giờ
         alert("Đăng nhập thành công!");
-       
-        console.log( response)
-       window.location.href = "/admin/dashboard";
+
+        console.log(response);
+        window.location.href = "/admin/dashboard";
       } catch (error) {
+        toast.error(error.response.data.message);
         console.error(error.response.data.message);
       }
     };
-  
+
     axiosLogin();
   };
 
   return (
     <div className={cx("login-container")}>
+      {/* Render the list of toasts */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
       <div className={cx("login-inner")}>
         <div className={cx("login-form")}>
           <div className={cx("login-form-inner")}>

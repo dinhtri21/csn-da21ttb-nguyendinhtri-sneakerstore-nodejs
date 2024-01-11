@@ -84,6 +84,16 @@ function AdminPopup({ isVisible, onClose, onAddProductSuccess }) {
 
       if (response.status === 201) {
         console.log("Product added successfully");
+        setProductData({
+          name: "",
+          description: "",
+          color: "",
+          price: "",
+          brand: "",
+          size: "",
+          quantity: "",
+        });
+        setImagePreview(null);
         onAddProductSuccess();
         onClose();
         navigate(`/admin/dashboard/products/${1}`);

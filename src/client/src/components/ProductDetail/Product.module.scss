@@ -48,10 +48,20 @@
   margin-top: 8px;
   font-weight: 500;
 }
+//brand
+.brand-title {
+  font-weight: 500;
+  color: var(--text-color-gray);
+  margin-top: 8px;
+}
+.brand-title-text {
+  margin-left: 6px;
+  color: var(--text-color-gray);
+}
 //size
 .product-size {
   display: inline-flex;
-  margin-top: 14px;
+  margin-top: 8px;
   align-items: center;
   // border-top: 1px solid black;
 }
@@ -142,6 +152,11 @@
   color: var(--black-color);
   font-weight: 400;
   font-size: 14px;
+}
+.quantity-stock {
+  color: var(--black-color);
+  font-size: 16px;
+  margin-left: 6px;
 }
 //add-to-cart-btn
 .add-to-cart-btn {

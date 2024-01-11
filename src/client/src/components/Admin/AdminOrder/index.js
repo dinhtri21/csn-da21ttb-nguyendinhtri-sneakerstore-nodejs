@@ -65,7 +65,7 @@ function AdminOrder({ axiosProduct, page, orders }) {
           <div className={cx("col-2", "flex-center")}>Ngày đặt</div>
           <div className={cx("col-2", "flex-center")}>Tổng giá tiền</div>
           <div className={cx("col-1", "flex-center")}>Tình trạng</div>
-          <div className={cx("col-2", "flex-center")}>Ghi chú</div>
+          <div className={cx("col-3", "flex-center")}>Ghi chú</div>
         </div>
         {orders.map((order, index) => {
           return (
@@ -119,7 +119,7 @@ function AdminOrder({ axiosProduct, page, orders }) {
                 {order.order_status}
               </div>
               <div
-                className={cx("col-3", "order-item-text", "order-note-text")}
+                className={cx("col-3", "order-item-text", "order-note-text", "flex-center")}
               >
                 {order.order_note}
               </div>
