@@ -13,9 +13,9 @@ var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
 
-import RedisStore from "connect-redis"
-import session from "express-session"
-import {createClient} from "redis"
+const RedisStore = require("connect-redis")(session);
+const cors = require("cors");
+const { createClient } = require("redis");
 
 const cors = require("cors");
 
