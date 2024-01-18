@@ -20,7 +20,6 @@ const cors = require("cors");
 var app = express();
 
 app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true }));
-// app.use(cors({ origin: "*", credentials: true }));
 
 app.use(cookieParser());
 
@@ -33,7 +32,6 @@ app.use(
     store: new RedisStore({
       host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
       port: 6379, // Port mặc định của Redis
-      // Add other options as needed
     }),
     cookie: {
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
@@ -57,7 +55,6 @@ app.use(logger("dev"));
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 // Kích hoạt CORS cho tất cả các tài nguyên
 
