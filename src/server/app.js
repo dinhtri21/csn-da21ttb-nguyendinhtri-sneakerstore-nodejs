@@ -32,10 +32,13 @@ app.use(
       port: 6379, // Port mặc định của Redis
       // Add other options as needed
     }),
-    cookie: new session.Cookie({
+    cookie: {
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
-      maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
-    }),
+    },
+    // cookie: new session.Cookie({
+    //   secure: true, // Chỉ đặt true khi sử dụng HTTPS
+    //   maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
+    // }),
   })
 );
 
