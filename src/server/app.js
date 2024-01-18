@@ -12,7 +12,8 @@ var productsRouter = require("./routes/products");
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
-const RedisStore = require('connect-redis')(session);
+const connectRedis = require('connect-redis');
+const RedisStore = connectRedis(session);
 
 const cors = require("cors");
 
