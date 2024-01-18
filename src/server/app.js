@@ -12,8 +12,10 @@ var productsRouter = require("./routes/products");
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
-const connectRedis = require('connect-redis');
-const RedisStore = connectRedis(session);
+
+import RedisStore from "connect-redis"
+import session from "express-session"
+import {createClient} from "redis"
 
 const cors = require("cors");
 
@@ -23,16 +25,27 @@ app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true })
 
 app.use(cookieParser());
 
+// Initialize client.
+let redisClient = createClient()
+redisClient.connect().catch(console.error)
+
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
+
 app.use(
   session({
     secret: "your-secret-key",
     resave: true,
     saveUninitialized: true,
     // store: new session.MemoryStore(),
-    store: new RedisStore({
-      host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
-      port: 6379, // Port mặc định của Redis
-    }),
+    store: redisStore,
+    // store: new RedisStore({
+    //   host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
+    //   port: 6379, // Port mặc định của Redis
+    // }),
     cookie: {
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
       httpOnly: true, // Ngăn chặn truy cập từ JavaScript
