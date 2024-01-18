@@ -29,6 +29,7 @@ app.use(cookieParser());
 const redisClient = redis.createClient({
   host: '54.79.212.139',  // Địa chỉ IP public của máy chủ Redis
   port: 6379,              // Port mặc định của Redis
+  legacyMode: true,
   // password: 'your_password',  // Nếu bạn đã đặt mật khẩu
 });
 
