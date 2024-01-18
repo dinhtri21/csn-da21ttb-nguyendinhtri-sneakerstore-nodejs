@@ -83,7 +83,7 @@ function BodyHome({ products }) {
             <h3 className={cx("title-body")}>THƯƠNG HIỆU NỔI BẬT</h3>
           </div>
         </div>
-        <div className={cx("row")}>
+        <div className={cx("row","logo-brand-container")}>
           <div className={cx("col-3", "col-half")}>
             <img className={cx("img-logo-brand")} src={images.nike_logo}></img>
           </div>
