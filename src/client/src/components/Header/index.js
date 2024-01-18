@@ -38,7 +38,7 @@ function Header() {
       try {
         // Gửi yêu cầu GET đến API để lấy số lượng sản phẩm trong giỏ hàng
         const response = await axios.get(
-          `https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart/getcartcount`,
+          `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart/getcartcount`,
           {
             withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
           }

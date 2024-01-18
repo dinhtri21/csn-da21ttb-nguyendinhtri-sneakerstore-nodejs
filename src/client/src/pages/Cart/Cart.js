@@ -7,7 +7,7 @@ function Cart() {
   useEffect(() => {
     const axiosProductsCart = async () => {
       try {
-        const response = await axios.get(`https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart`, {
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart`, {
           withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
         });
         setProducts(response.data);
@@ -23,7 +23,7 @@ function Cart() {
     // Implement logic to update cart data
     console.log("updateCartData")
     try {
-      const response = await axios.get(`https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart`, {
+      const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/cart`, {
         withCredentials: true,
       });
       setProducts(response.data);
