@@ -12,8 +12,9 @@ var productsRouter = require("./routes/products");
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
-const connectRedis = require('connect-redis');
-const RedisStore = connectRedis(session);
+
+
+var cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 
@@ -22,24 +23,39 @@ var app = express();
 app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true }));
 // app.use(cors({ origin: "*", credentials: true }));
 
+app.use(cookieParser());
+
+// app.use(
+//   session({
+//     secret: "your-secret-key",
+//     resave: true,
+//     saveUninitialized: true,
+//     // store: new session.MemoryStore(),
+//     // store: new RedisStore({
+//     //   host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
+//     //   port: 6379, // Port mặc định của Redis
+//     //   // Add other options as needed
+//     // }),
+//     cookie: {
+//       secure: true, // Chỉ đặt true khi sử dụng HTTPS
+//     },
+//     // cookie: new session.Cookie({
+//     //   secure: true, // Chỉ đặt true khi sử dụng HTTPS
+//     //   maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
+//     // }),
+//   })
+// );
+
 app.use(
   session({
     secret: "your-secret-key",
     resave: true,
     saveUninitialized: true,
-    // store: new session.MemoryStore(),
-    store: new RedisStore({
-      host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
-      port: 6379, // Port mặc định của Redis
-      // Add other options as needed
-    }),
     cookie: {
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
+      httpOnly: true, // Ngăn chặn truy cập từ JavaScript
+      maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
     },
-    // cookie: new session.Cookie({
-    //   secure: true, // Chỉ đặt true khi sử dụng HTTPS
-    //   maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
-    // }),
   })
 );
 
@@ -52,7 +68,7 @@ app.use(logger("dev"));
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 // Kích hoạt CORS cho tất cả các tài nguyên
 
