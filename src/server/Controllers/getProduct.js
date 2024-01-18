@@ -8,7 +8,7 @@ const getProduct = (req, res) => {
     name,
     description,
     price,
-    CONCAT('http://${process.env.BASE_URL}/images/', image1) AS image1,
+    CONCAT('https://${process.env.BASE_URL}/images/', image1) AS image1,
     brand,
     color,
     size,

@@ -12,7 +12,7 @@ const getRandomProducts = (req, res) => {
       const updatedResults = results.map((result) => {
         return {
           ...result,
-          image1: `http://${process.env.BASE_URL}/images${result.image1}`,
+          image1: `https://${process.env.BASE_URL}/images${result.image1}`,
         };
       });
       res.json(updatedResults);
