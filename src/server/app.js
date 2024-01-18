@@ -32,10 +32,19 @@ const redisClient = redis.createClient({
   // password: 'your_password',  // Nếu bạn đã đặt mật khẩu
 });
 
+
 // Initialize store.
 const redisStore = new RedisStore({
   client: redisClient,
   // Các tùy chọn khác
+});
+
+redisClient.on("error", function (err) {
+  console.error("Redis error: " + err);
+});
+
+redisStore.on("error", function (err) {
+  console.error("RedisStore error: " + err);
 });
 
 app.use(
