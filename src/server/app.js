@@ -28,6 +28,7 @@ app.use(
     store: new session.MemoryStore(),
     cookie: new session.Cookie({
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
+      maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
     }),
   })
 );
