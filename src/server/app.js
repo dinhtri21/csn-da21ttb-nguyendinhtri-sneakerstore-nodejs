@@ -14,7 +14,6 @@ var order = require("./routes/order");
 var admin = require("./routes/admin");
 
 const RedisStore = require("connect-redis")(session);
-const cors = require("cors");
 const { createClient } = require("redis");
 
 const cors = require("cors");
