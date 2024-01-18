@@ -26,27 +26,35 @@ app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true })
 app.use(cookieParser());
 
 // Initialize client.
-const redisClient = redis.createClient({
-  host: '54.79.212.139',  // Địa chỉ IP public của máy chủ Redis
-  port: 6379,              // Port mặc định của Redis
-  legacyMode: true,
-  // password: 'your_password',  // Nếu bạn đã đặt mật khẩu
-});
+// Hàm tạo client Redis
+function createRedisClient() {
+  return redis.createClient({
+    host: '54.79.212.139',
+    port: 6379,
+    legacyMode: true,
+  });
+}
+// Hàm tạo store
+function createRedisStore() {
+  return new RedisStore({
+    client: createRedisClient(),
+  });
+}
 
 
 // Initialize store.
-const redisStore = new RedisStore({
-  client: redisClient,
-  // Các tùy chọn khác
-});
+// const redisStore = new RedisStore({
+//   client: redisClient,
+//   // Các tùy chọn khác
+// });
 
-redisClient.on("error", function (err) {
-  console.error("Redis error: " + err);
-});
+// redisClient.on("error", function (err) {
+//   console.error("Redis error: " + err);
+// });
 
-redisStore.on("error", function (err) {
-  console.error("RedisStore error: " + err);
-});
+// redisStore.on("error", function (err) {
+//   console.error("RedisStore error: " + err);
+// });
 
 app.use(
   session({
@@ -54,7 +62,8 @@ app.use(
     resave: true,
     saveUninitialized: true,
     // store: new session.MemoryStore(),
-    store: redisStore,
+    // store: redisStore,
+    store: createRedisStore(),
     // store: new RedisStore({
     //   host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
     //   port: 6379, // Port mặc định của Redis
