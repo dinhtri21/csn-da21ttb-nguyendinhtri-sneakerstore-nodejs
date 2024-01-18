@@ -12,6 +12,7 @@ var productsRouter = require("./routes/products");
 var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
+const RedisStore = require('connect-redis')(session);
 
 const cors = require("cors");
 
@@ -25,7 +26,12 @@ app.use(
     secret: "your-secret-key",
     resave: true,
     saveUninitialized: true,
-    store: new session.MemoryStore(),
+    // store: new session.MemoryStore(),
+    store: new RedisStore({
+      host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
+      port: 6379, // Port mặc định của Redis
+      // Add other options as needed
+    }),
     cookie: new session.Cookie({
       secure: true, // Chỉ đặt true khi sử dụng HTTPS
       maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
