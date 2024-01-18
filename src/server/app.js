@@ -15,6 +15,7 @@ var admin = require("./routes/admin");
 
 const RedisStore = require("connect-redis")(session);
 const { createClient } = require("redis");
+const redis = require("redis");
 
 const cors = require("cors");
 
@@ -25,14 +26,17 @@ app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true })
 app.use(cookieParser());
 
 // Initialize client.
-let redisClient = createClient()
-redisClient.connect().catch(console.error)
+const redisClient = redis.createClient({
+  host: '54.79.212.139',  // Địa chỉ IP public của máy chủ Redis
+  port: 6379,              // Port mặc định của Redis
+  // password: 'your_password',  // Nếu bạn đã đặt mật khẩu
+});
 
 // Initialize store.
-let redisStore = new RedisStore({
+const redisStore = new RedisStore({
   client: redisClient,
-  prefix: "myapp:",
-})
+  // Các tùy chọn khác
+});
 
 app.use(
   session({
