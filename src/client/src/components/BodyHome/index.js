@@ -16,7 +16,7 @@ function BodyHome({ products }) {
   const axiosProducts = async (page) => {
     try {
       const response = await axios.get(
-        `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/products/filter`,
+        `https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/products/filter`,
         {
           params: {
             sortprice: "default",
