@@ -26,7 +26,7 @@ app.use(
     saveUninitialized: true,
     store: new session.MemoryStore(),
     cookie: new session.Cookie({
-      secure: false, // Chỉ đặt true khi sử dụng HTTPS
+      secure: true, // Chỉ đặt true khi sử dụng HTTPS
     }),
   })
 );
