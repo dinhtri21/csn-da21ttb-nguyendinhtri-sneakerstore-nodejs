@@ -32,7 +32,7 @@ function Products() {
   const axiosProducts = async (page) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/products/filter`,
+        `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/products/filter`,
         {
           params: {
             sortprice: sortByPrice,
@@ -56,7 +56,7 @@ function Products() {
   const axiosProductsBrand = async (page) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/products/filter`,
+        `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/products/filter`,
         {
           params: {
             sortprice: sortByPrice,

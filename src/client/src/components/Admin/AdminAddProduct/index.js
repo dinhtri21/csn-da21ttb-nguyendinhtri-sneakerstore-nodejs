@@ -72,7 +72,7 @@ function AdminPopup({ isVisible, onClose, onAddProductSuccess }) {
     try {
       const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.post(
-        `http://localhost:3001/admin/addProduct`,
+        `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/addProduct`,
         formData,
         {
           headers: {

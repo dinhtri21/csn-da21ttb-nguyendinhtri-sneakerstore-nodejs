@@ -17,7 +17,7 @@ function AdminProducts() {
       try {
         const token = Cookies.get("token"); // Lấy token từ cookie
         const response = await axios.get(
-          `http://localhost:3001/admin/getAdminProducts/${page}`,
+          `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/getAdminProducts/${page}`,
           {
             withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
             headers: {
