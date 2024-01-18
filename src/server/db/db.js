@@ -1,10 +1,12 @@
 const mysql = require("mysql2");
 
+// Sử dụng biến môi trường để cấu hình kết nối
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "thewings21092003",
-  database: "sneakerstore",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "thewings21092003",
+  database: process.env.DB_DATABASE || "sneakerstore",
+  port: process.env.DB_PORT || 3306,
 });
 
 db.connect((err) => {
@@ -16,3 +18,6 @@ db.connect((err) => {
 });
 
 module.exports = db;
+
+
+
