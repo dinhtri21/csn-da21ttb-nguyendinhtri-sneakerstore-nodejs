@@ -12,7 +12,7 @@ function AdminDashboard() {
     try {
       const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.get(
-        `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/gettotalrevenue`,
+        `https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/gettotalrevenue`,
         {
           withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
           headers: {

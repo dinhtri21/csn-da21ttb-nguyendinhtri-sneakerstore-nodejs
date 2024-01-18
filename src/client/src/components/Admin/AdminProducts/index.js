@@ -83,7 +83,7 @@ function AdminProducts({ axiosProducts, page, products }) {
       try {
         const token = Cookies.get("token"); // Lấy token từ cookie
         const response = await axios.delete(
-          `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/delete/${productId}`,
+          `https://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/admin/delete/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
