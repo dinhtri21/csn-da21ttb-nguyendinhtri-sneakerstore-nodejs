@@ -40,7 +40,7 @@ function AdminPopup({
       // Gửi dữ liệu về server
       const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.put(
-        `https://${process.env.REACT_APP_API_URL}/admin/putAdminProduct`,
+        `http://${process.env.REACT_APP_API_URL}/admin/putAdminProduct`,
         {
           ...productData,
         },

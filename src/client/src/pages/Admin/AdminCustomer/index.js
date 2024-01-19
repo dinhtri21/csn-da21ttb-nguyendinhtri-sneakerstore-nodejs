@@ -15,7 +15,7 @@ function AdminCustomer() {
     try {
       const token = Cookies.get("token"); // Lấy token từ cookie
       const response = await axios.get(
-        `https://${process.env.REACT_APP_API_URL}/admin/getCustomer/${page}`,
+        `http://${process.env.REACT_APP_API_URL}/admin/getCustomer/${page}`,
         {
           withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
           headers: {

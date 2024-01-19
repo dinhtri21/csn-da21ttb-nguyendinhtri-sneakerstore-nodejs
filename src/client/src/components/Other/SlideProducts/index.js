@@ -23,7 +23,7 @@ function SlideShowProducts({ products_props, title }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`https://${process.env.REACT_APP_API_URL}/products/random`);
+      const response = await axios.get(`http://${process.env.REACT_APP_API_URL}/products/random`);
       setProducts(response.data);
     } catch (err) {
       console.log("Error: " + err);

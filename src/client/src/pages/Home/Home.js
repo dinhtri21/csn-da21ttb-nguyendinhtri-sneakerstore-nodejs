@@ -8,7 +8,7 @@ function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`https://${process.env.REACT_APP_API_URL}/products/hot`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}/products/hot`);
         console.log(response)
         setProducts(response.data);
       } catch (err) {

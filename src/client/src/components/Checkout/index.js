@@ -25,7 +25,7 @@ function Checkout({ products, handleGetProductsCart }) {
     try {
       // Gửi yêu cầu GET đến API để lấy số lượng sản phẩm trong giỏ hàng
       const response = await axios.get(
-        `https://${process.env.REACT_APP_API_URL}/cart/getcartcount`,
+        `http://${process.env.REACT_APP_API_URL}/cart/getcartcount`,
         {
           withCredentials: true, // Bật chế độ gửi cookie với yêu cầu
         }
@@ -123,7 +123,7 @@ function Checkout({ products, handleGetProductsCart }) {
 
     const axiosCheckOut = async () => {
       await axios
-        .post(`https://${process.env.REACT_APP_API_URL}/order`, orderData)
+        .post(`http://${process.env.REACT_APP_API_URL}/order`, orderData)
         .then((response) => {
           console.log(response.data.message);
           toast.update(toastId1, {
@@ -152,7 +152,7 @@ function Checkout({ products, handleGetProductsCart }) {
   //BEGIN: CLEAR GIỎ HÀNG //
   const ClearCart = async () => {
     axios
-      .post(`https://${process.env.REACT_APP_API_URL}/cart/clearProductCart`, [], {
+      .post(`http://${process.env.REACT_APP_API_URL}/cart/clearProductCart`, [], {
         withCredentials: true,
       })
       .then((res) => {
