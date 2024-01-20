@@ -48,6 +48,7 @@ function AdminProducts({ axiosProducts, page, products }) {
   useEffect(() => {
     if (addProductSuccess) {
       setCurrentPage(1);
+      navigate(`/admin/dashboard/products/${1}`);
       setAddProductSuccess(false);
     }
   }, [addProductSuccess]);
@@ -73,8 +74,8 @@ function AdminProducts({ axiosProducts, page, products }) {
     setPopupVisible1((prevState) => !prevState);
     // setSelectProduct(product);
   };
-
   //POPUP sửa sản phẩm //
+
   //BEGIN: XOÁ SẢN PHẨM//
   const handleDeleteProduct = async (productId) => {
     const userConfirmed = window.confirm("Bạn có chắc chắn muốn xoá?");

@@ -12,9 +12,10 @@ const addProduct = require("../Controllers/admin/addProducts")
 const deleteProduct = require("../Controllers/admin/deleteProduct");
 
 // Route không yêu cầu xác thực token
-router.post("/login", postAdminLogin.postAdminLogin);
 
 // Các route dưới đây yêu cầu xác thực token
+
+router.post("/login", postAdminLogin.postAdminLogin);
 router.post("/addProduct", authenticateToken, addProduct.addProduct);
 router.get("/getOrder/:page", authenticateToken, getAdminOrder.getAdminOrder);
 router.get("/getCustomer/:page", authenticateToken, getCustomer.getCustomer);

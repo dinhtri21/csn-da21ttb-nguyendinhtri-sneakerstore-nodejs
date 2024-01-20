@@ -1,4 +1,3 @@
-// Add this route in your server code
 const updateProductQuantity = (req, res) => {
   const { product_id, quantity } = req.body;
 

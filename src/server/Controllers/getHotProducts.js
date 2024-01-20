@@ -7,7 +7,7 @@ const getHotProducts = (req, res) => {
       MIN(p.product_id) AS product_id,
       p.description,
       p.price,
-      CONCAT('https://${process.env.BASE_URL}/images', p.image1) AS image1,
+      CONCAT('http://${process.env.BASE_URL}/images', p.image1) AS image1,
       p.brand,
     COALESCE(SUM(od.quantity), 0) AS total_sold
     FROM

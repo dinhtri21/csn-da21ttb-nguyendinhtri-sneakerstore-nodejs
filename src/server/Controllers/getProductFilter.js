@@ -41,7 +41,7 @@ const getProductFilter = (req, res) => {
                 name,
                 MIN(description) AS description,
                 MIN(price) AS price,
-                CONCAT('https://${process.env.BASE_URL}/images', MIN(image1)) AS image1,
+                CONCAT('http://${process.env.BASE_URL}/images', MIN(image1)) AS image1,
                 MIN(brand) AS brand,
                 MIN(color) AS color,
                 NULL AS size,

@@ -13,70 +13,27 @@ var cartRouter = require("./routes/cart");
 var order = require("./routes/order");
 var admin = require("./routes/admin");
 
-const RedisStore = require("connect-redis")(session);
-const { createClient } = require("redis");
-const redis = require("redis");
-
 const cors = require("cors");
 
 var app = express();
 
-app.use(cors({ origin: `https://${process.env.REACT_CORS}`, credentials: true }));
+app.use(cors({ origin: `http://${process.env.REACT_CORS}`, credentials: true }));
 
 app.use(cookieParser());
 
-// Initialize client.
-// Hàm tạo client Redis
-function createRedisClient() {
-  return redis.createClient({
-    host: '54.79.212.139',
-    port: 6379,
-    legacyMode: true,
-  });
-}
-// Hàm tạo store
-function createRedisStore() {
-  return new RedisStore({
-    client: createRedisClient(),
-  });
-}
-
-
-// Initialize store.
-// const redisStore = new RedisStore({
-//   client: redisClient,
-//   // Các tùy chọn khác
-// });
-
-// redisClient.on("error", function (err) {
-//   console.error("Redis error: " + err);
-// });
-
-// redisStore.on("error", function (err) {
-//   console.error("RedisStore error: " + err);
-// });
 
 app.use(
   session({
     secret: "your-secret-key",
     resave: true,
     saveUninitialized: true,
-    // store: new session.MemoryStore(),
-    // store: redisStore,
-    store: createRedisStore(),
-    // store: new RedisStore({
-    //   host: `${process.env.BASE_URL}`, // Thay bằng địa chỉ Redis của bạn
-    //   port: 6379, // Port mặc định của Redis
-    // }),
-    cookie: {
-      secure: true, // Chỉ đặt true khi sử dụng HTTPS
-      httpOnly: true, // Ngăn chặn truy cập từ JavaScript
+    cookie: new session.Cookie({
+      secure: false, // Chỉ đặt true khi sử dụng HTTPS
       maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
-    },
-    // cookie: new session.Cookie({
-    //   secure: true, // Chỉ đặt true khi sử dụng HTTPS
-    //   maxAge: 3600000, // Ví dụ: 1 giờ (3600 giây)
-    // }),
+      // httpOnly: , // Ngăn chặn truy cập từ JavaScript
+    }),
+    store: new session.MemoryStore(),
+   
   })
 );
 
@@ -86,8 +43,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
 app.use(logger("dev"));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.static(path.join(__dirname, "public")));

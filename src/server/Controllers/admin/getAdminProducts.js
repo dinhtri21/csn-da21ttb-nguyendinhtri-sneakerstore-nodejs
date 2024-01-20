@@ -9,7 +9,7 @@ const getAdminProducts = (req, res) => {
   db.query(
     `SELECT
         p.*,
-        CONCAT('https://${process.env.BASE_URL}/images/', p.image1) AS image1,
+        CONCAT('http://${process.env.BASE_URL}/images/', p.image1) AS image1,
         COUNT(*) OVER() AS total_number_products
     FROM products p
     LIMIT ${startIndex}, ${itemsPerPage};`,

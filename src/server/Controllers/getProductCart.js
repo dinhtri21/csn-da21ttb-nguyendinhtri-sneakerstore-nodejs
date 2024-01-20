@@ -18,7 +18,7 @@ function getProductCart(req, res) {
         name,
         description,
         price,
-        CONCAT('https://${process.env.BASE_URL}/images', image1) AS image1,
+        CONCAT('http://${process.env.BASE_URL}/images', image1) AS image1,
         brand,
         color,
         size,
